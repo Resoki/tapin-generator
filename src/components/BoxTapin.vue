@@ -1,20 +1,17 @@
 <template>
-  <div v-if="contentDisplay" class="box-tapin" >
+ <div v-if="contentDisplay" class="box-tapin" >
     <p>{{ contentDisplay }}</p>
     <img class="img-display" :src="imgDisplay" />
-      <a :href="twitterShareUrl" target="_blank" class="share-button">
-        Tweeter 
-        <img src="../../public/images/share.png" alt="Share on Twitter" />
-      </a>
-</div>
+    <a :href="twitterShareUrl" target="_blank" class="share-button">
+    Tweeter 
+        <img src="../../public/images/share.png" />
+    </a>
+  </div>
 </template>
 
 <script>
-// Components
-
 export default {
   name: 'BoxTapin',
-  components: {},
   props: {
     contentDisplay: String,
     imgDisplay: String,
@@ -28,18 +25,18 @@ export default {
   margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 10px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 0 auto;
   margin-top: 10px !important;
-  max-width: 400px; /* Ajustez la largeur selon vos besoins */
+  max-width: 400px;
   background-color: #f5f5f5;
 }
 
 .img-display {
-    border: 2px solid black;
+  border: 2px solid black;
   border-radius: 12px;
 }
 
@@ -56,7 +53,7 @@ export default {
 }
 
 .share-button {
-  margin-top: 10px;
+  margin-top: 10px !important;
   display: flex;
   align-items: center;
   margin: 0 auto;
@@ -77,5 +74,9 @@ export default {
 
 .share-button:hover {
   background-color: #1991da;
+}
+p {
+ font-weight: 600;
+ font-size: 14px;
 }
 </style>

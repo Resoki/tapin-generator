@@ -1,5 +1,8 @@
 <template>
-    <span v-if="isGenerating"><i class="fa fa-spinner fa-spin"></i>{{text}}</span>
+  <span v-if="isGenerating">
+    <i class="fa fa-spinner fa-spin"/>
+    {{text}}
+  </span>
 </template>
 
 <script>

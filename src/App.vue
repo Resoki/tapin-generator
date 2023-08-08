@@ -3,13 +3,12 @@
 </template>
 
 <script>
+// Components
 import TapInGenerator from './components/TapInGenerator.vue'
 
 export default {
   name: 'App',
-  components: {
-    TapInGenerator
-  }
+  components: { TapInGenerator }
 }
 </script>
 
@@ -22,7 +21,8 @@ export default {
   color: white;
   margin-top: 60px;
 }
+
 html {
-   background: #2c3e50;
+  background: #2c3e50;
 }
 </style>

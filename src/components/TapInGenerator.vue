@@ -1,21 +1,10 @@
 <template>
-  <div class="hello">
+  <div>
     <h1>{{ title }}</h1>
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
-    <ButtonGenerate 
-      :isGenerating="isGenerating" 
-      text="Generate Tap-In"
-      @emitClick="searchUser()"
-    />
-    <GeneratingText 
-      :isGenerating="isGenerating" 
-      text="Generating..."
-    />
-    <BoxTapin 
-      :contentDisplay="contentDisplay" 
-      :imgDisplay="imgDisplay" 
-      :twitterShareUrl="twitterShareUrl" 
-    />
+    <ButtonGenerate :isGenerating="isGenerating" text="Generate Tap-In" @emitClick="searchUser()"/>
+    <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
+    <BoxTapin :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
     <FooterComponent />
   </div>
 </template>
@@ -60,18 +49,17 @@ export default {
   },
   computed: {
     twitterShareUrl() {
-      const tweetText = encodeURIComponent(this.contentDisplay);
-      return `https://twitter.com/intent/tweet?text=${tweetText}`;
+      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.contentDisplay)}`;
     },
   },
   methods: {
-    objetAleatoire(tableau) {
-      let indexAleatoire = Math.floor(Math.random() * tableau.length);
-      while (indexAleatoire === this.lastImageIndex) {
-        indexAleatoire = Math.floor(Math.random() * tableau.length);
+    objetAleatoire(tab) {
+      let indexRd = Math.floor(Math.random() * tab.length);
+      while (indexRd === this.lastImageIndex) {
+        indexRd = Math.floor(Math.random() * tab.length);
       }
-      this.lastImageIndex = indexAleatoire;
-      return tableau[indexAleatoire];
+      this.lastImageIndex = indexRd;
+      return tab[indexRd];
     },
 
     searchUser() {
@@ -90,42 +78,10 @@ export default {
 }
 </script>
 <style scoped>
-
-.share-button {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  margin: 0 auto;
-  background-color: #1da1f2;
-  border: none;
-  border-radius: 50%;
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-decoration: none;
-  color: white;
-}
-
-.share-button img {
-  width: 24px;
-  height: 24px;
-}
-
-.share-button:hover {
-  background-color: #1991da;
-}
-
-.form {
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-}
-
 .twitter-button {
   background-color: #1da1f2;
   border: none;
-  border-radius: 9999px;
+  border-radius: 12px;
   color: white;
   padding: 10px 20px;
   font-size: 16px;
@@ -140,19 +96,5 @@ export default {
 .twitter-button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.4);
-}
-
-
-.fa-spinner {
-  animation: spin 1s infinite linear;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-a {
-  color: #42b983;
 }
 </style>
