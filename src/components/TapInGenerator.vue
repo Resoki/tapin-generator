@@ -117,7 +117,9 @@ h3 {
 
 .share-button {
   margin-top: 10px;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
   background-color: #1da1f2;
   border: none;
   border-radius: 50%;
