@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img class="x-logo" src="../../public/images/x.png" />
     <h1>{{ title }}</h1>
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
     <ButtonGenerate :isGenerating="isGenerating" text="Generate Tap-In" @emitClick="searchUser()"/>
@@ -96,5 +97,9 @@ export default {
 .twitter-button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.4);
+}
+
+.x-logo {
+  width: 46px;
 }
 </style>
