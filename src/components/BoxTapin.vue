@@ -1,0 +1,81 @@
+<template>
+  <div v-if="contentDisplay" class="box-tapin" >
+    <p>{{ contentDisplay }}</p>
+    <img class="img-display" :src="imgDisplay" />
+      <a :href="twitterShareUrl" target="_blank" class="share-button">
+        Tweeter 
+        <img src="../../public/images/share.png" alt="Share on Twitter" />
+      </a>
+</div>
+</template>
+
+<script>
+// Components
+
+export default {
+  name: 'BoxTapin',
+  components: {},
+  props: {
+    contentDisplay: String,
+    imgDisplay: String,
+    twitterShareUrl: String
+  },
+}
+</script>
+<style scoped>
+.box-tapin {
+  color: black;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 auto;
+  margin-top: 10px !important;
+  max-width: 400px; /* Ajustez la largeur selon vos besoins */
+  background-color: #f5f5f5;
+}
+
+.img-display {
+    border: 2px solid black;
+  border-radius: 12px;
+}
+
+.box-tapin p {
+  margin: 5px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.box-tapin img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.share-button {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  background-color: #1da1f2;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: white;
+}
+
+.share-button img {
+  width: 24px;
+  height: 24px;
+}
+
+.share-button:hover {
+  background-color: #1991da;
+}
+</style>

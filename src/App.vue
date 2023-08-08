@@ -1,5 +1,5 @@
 <template>
-  <TapInGenerator msg="Tap-in Generator"/>
+  <TapInGenerator title="Tap-in Generator"/>
 </template>
 
 <script>

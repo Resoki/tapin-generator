@@ -1,29 +1,37 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ title }}</h1>
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
-    <button v-if="!isGenerating" class="twitter-button" @click="searchUser()">Generate Tap-in</button>
-    <span v-else><i class="fa fa-spinner fa-spin"></i> Generating...</span>
-    <div v-if="contentDisplay" class="box-tapin" >
-    <p>{{ contentDisplay }}</p>
-    <img :src="imgDisplay" />
-      <a :href="twitterShareUrl" target="_blank" class="share-button">
-        Tweeter 
-        <img src="../../public/images/share.png" alt="Share on Twitter" />
-      </a>
-    </div>
+    <ButtonGenerate 
+      :isGenerating="isGenerating" 
+      text="Generate Tap-In"
+      @emitClick="searchUser()"
+    />
+    <GeneratingText 
+      :isGenerating="isGenerating" 
+      text="Generating..."
+    />
+    <BoxTapin 
+      :contentDisplay="contentDisplay" 
+      :imgDisplay="imgDisplay" 
+      :twitterShareUrl="twitterShareUrl" 
+    />
     <FooterComponent />
   </div>
 </template>
 
 <script>
-import FooterComponent from '../components/FooterComponent.vue';
+// Components
+import FooterComponent from '@/components/FooterComponent.vue';
+import ButtonGenerate from '@/components/ButtonGenerate.vue';
+import GeneratingText from '@/components/GeneratingText.vue'
+import BoxTapin from '../components/BoxTapin.vue';
 
 export default {
   name: 'TapInGenerator',
-  components: {FooterComponent},
+  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin },
   props: {
-    msg: String
+    title: String
   },
   data() {
     return {
@@ -62,7 +70,6 @@ export default {
       while (indexAleatoire === this.lastImageIndex) {
         indexAleatoire = Math.floor(Math.random() * tableau.length);
       }
-      
       this.lastImageIndex = indexAleatoire;
       return tableau[indexAleatoire];
     },
@@ -71,49 +78,18 @@ export default {
       this.isGenerating = true;
       this.contentDisplay = null;
       this.imgDisplay = null;
-
       setTimeout(()=> {
-      const objetAlea = this.objetAleatoire(this.tapin);
-      this.txt = objetAlea;
-      this.contentDisplay = objetAlea.content;
-      this.imgDisplay = objetAlea.url;
-      this.isGenerating = false;
+        const objetAlea = this.objetAleatoire(this.tapin);
+        this.txt = objetAlea;
+        this.contentDisplay = objetAlea.content;
+        this.imgDisplay = objetAlea.url;
+        this.isGenerating = false;
       }, 1000);
     }
   }
 }
 </script>
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-
-.box-tapin {
-  color: black;
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 0 auto;
-  margin-top: 10px !important;
-  max-width: 400px; /* Ajustez la largeur selon vos besoins */
-  background-color: #f5f5f5;
-}
-
-.box-tapin p {
-  margin: 5px 0;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.box-tapin img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
 
 .share-button {
   margin-top: 10px;
@@ -179,6 +155,4 @@ h3 {
 a {
   color: #42b983;
 }
-
-
 </style>
