@@ -36,7 +36,13 @@ export default {
         {content: `Askip je ressemble à Mona Lisa`, url:'images/monalisa.jpg'},
         {content: `Je vais faire une détection à Woippy ! J’espère ils me prendront.`, url:'images/woippychoose.jpg'},
         {content: `Vous connaissez ce pays ?? !`, url:'images/listenbourg.jpg'},
-        {content: `I need logo to receive my metamask hack wallet !`, url:''}
+        {content: `I need logo to receive my metamask hack wallet !`, url:''},
+        {content: `L'eau dans ces gobelets était pas bonne !`, url:'images/gobelet.jpg'},
+        {content: `Mes écouteurs quand je les sort de ma poche`, url:'images/ecouteurs.jpg'},
+        {content: `On a tous cette fissure`, url:'images/fissure.jpg'},
+        {content: `Moi quand je me cogne le coude`, url:'images/coude.jpg'},
+        {content: `Une relation c'est 50/50`, url:'images/50.jpg'},
+        {content: `Tout le monde aime ce medicament`, url:'images/medic.jpg'}
         ],
       txt: '',
       contentDisplay: '',
