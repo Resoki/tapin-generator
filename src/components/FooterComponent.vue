@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div class="box-footer-name">
-      <p>@2023 - Créé par Reso</p>
+      <p>@2023 - Créé par <a class="link-reso" href="https://twitter.com/resoquibug" target='_blank'>Reso</a></p>
       <img class="img-reso" src="../../public/images/reso.jpg"/>
     </div>
   </div>
@@ -24,5 +24,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.link-reso {
+  text-decoration: none;
+  color: rgb(4, 119, 234);
+}
+
+p {
+  font-size: 13px;
 }
 </style>
