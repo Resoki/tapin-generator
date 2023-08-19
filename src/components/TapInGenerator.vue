@@ -40,7 +40,13 @@ export default {
         {content: `On a tous cette fissure`, url:'images/fissure.jpg'},
         {content: `Moi quand je me cogne le coude`, url:'images/coude.jpg'},
         {content: `Une relation c'est 50/50`, url:'images/50.jpg'},
-        {content: `Tout le monde aime ce medicament`, url:'images/medic.jpg'}
+        {content: `Tout le monde aime ce medicament`, url:'images/medic.jpg'},
+        {content: `Fav et commente et je te dis comment je te vois`, url:'images/cmjtevois.jpg'},
+        {content: `- T'as mangé ou tu manges avec nous ? 
+                  - J'ai pas mangé et je mange pas avec vous`, url:'images/tamange.jpg'},
+        {content: `Les petits d’aujourd’hui ils veulent des iPhones alors que moi je voulais ça :`, url:'images/avant.jpg'},
+        {content: `En primaire on a tous connu un mec comme ça : `, url:'images/primaire.jpg'},
+          {content: `Des « hommes » n’ont jamais habité ici : `, url:'images/400k.jpg'},
         ],
       txt: '',
       contentDisplay: '',
