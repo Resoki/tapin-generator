@@ -2,6 +2,10 @@
   <div>
     <img class="x-logo" src="../../public/images/x.png" />
     <h1>{{ title }}</h1>
+    <div class="generation-counter">
+    <p>Nb de générations: <b>{{ clickCount }}</b></p>
+    <p v-if="visiteCount > 1">Nb de visite: {{ visiteCount }}</p>
+  </div>
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
     <ButtonGenerate :isGenerating="isGenerating" text="Generate Tap-In" @emitClick="searchUser()"/>
     <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
@@ -16,6 +20,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
 import ButtonGenerate from '@/components/ButtonGenerate.vue';
 import GeneratingText from '@/components/GeneratingText.vue'
 import BoxTapin from '@/components/BoxTapin.vue';
+import axios from 'axios';
 
 export default {
   name: 'TapInGenerator',
@@ -26,6 +31,21 @@ export default {
   beforeUnmount() {
   this.displayedIndices = [];
 },
+  created() {
+      axios.get('https://reso-site-962417506479.herokuapp.com/record-visite')
+        .then((res)=> {
+          console.log(res.data);
+        })
+      axios.get('https://reso-site-962417506479.herokuapp.com/click')
+        .then((res)=> {
+          this.clickCount = res.data.clickCount;
+        })
+      axios.get('https://reso-site-962417506479.herokuapp.com/visite')
+        .then((res)=> {
+          console.log(res.data);
+       this.visiteCount = res.data.visiteCount;
+        })
+  },
   data() {
     return {
       tapin: [
@@ -58,7 +78,9 @@ export default {
       contentDisplay: '',
       imgDisplay: '',
       isGenerating: false,
-      displayedIndices: []
+      displayedIndices: [],
+      visiteCount: 0,
+      clickCount: 0
     }
   },
   computed: {
@@ -76,6 +98,15 @@ export default {
       return tab[indexRd];
   },
     searchUser() {
+    axios.get('https://reso-site-962417506479.herokuapp.com/record-click')
+      .then((res)=> {
+        console.log('new click', res)
+      })
+
+      axios.get('https://reso-site-962417506479.herokuapp.com/click')
+      .then((res)=> {
+        this.clickCount = res.data.clickCount;
+      })
       this.isGenerating = true;
       this.contentDisplay = null;
       this.imgDisplay = null;
@@ -116,5 +147,17 @@ export default {
 
 .x-logo {
   width: 46px;
+}
+.generation-counter {
+  background-color: #b2b2b2;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  max-width: 300px;
+  margin: 0 auto;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: black;
 }
 </style>
