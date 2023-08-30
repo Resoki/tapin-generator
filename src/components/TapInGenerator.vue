@@ -3,7 +3,7 @@
     <img class="x-logo" src="../../public/images/x.png" />
     <h1>{{ title }}</h1>
     <div class="generation-counter">
-    <p>Nb de générations: <b>{{ clickCount }}</b></p>
+    <p>Total de génerations déjà effectuées: <b>{{ clickCount }}</b></p>
     <p v-if="visiteCount > 1">Nb de visite: {{ visiteCount }}</p>
   </div>
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
@@ -149,15 +149,13 @@ export default {
   width: 46px;
 }
 .generation-counter {
-  background-color: #b2b2b2;
-  border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 10px;
   text-align: center;
   max-width: 300px;
   margin: 0 auto;
   margin-top: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: black;
+  color: white;
+  margin-bottom: 10px;
 }
 </style>
