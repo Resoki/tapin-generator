@@ -33,11 +33,16 @@ export default {
   this.displayedIndices = [];
 },
   created() {
-      this.tapinStock = this.tapin.length;
+    const hasVisited = localStorage.getItem('visitedWebsite');
+    if (!hasVisited) {
       axios.get('https://reso-site-962417506479.herokuapp.com/record-visite')
-        .then((res)=> {
+        .then((res) => {
           console.log(res.data);
-        })
+        });
+        
+      localStorage.setItem('visitedWebsite', true);
+    }
+      this.tapinStock = this.tapin.length;
       axios.get('https://reso-site-962417506479.herokuapp.com/click')
         .then((res)=> {
           this.clickCount = res.data.clickCount;
