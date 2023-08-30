@@ -65,11 +65,12 @@ export default {
 .share-button {
   margin-top: 10px !important;
   display: flex;
+  font-size: 14px;
   align-items: center;
   margin: 0 auto;
   background-color: #1da1f2;
   border: none;
-  border-radius: 50%;
+  border-radius: 12px;
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
