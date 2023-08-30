@@ -5,7 +5,7 @@
     <div class="generation-counter">
     <p>Total de génerations déjà effectuées: <b><span class="count">{{ clickCount }}</span></b></p>
     <p>Total de tapins en stock: <b><span class="count">{{ tapinStock }}</span></b></p>
-    <p v-if="visiteCount > 1">Nb de visite: {{ visiteCount }}</p>
+    <p v-if="visiteCount > 1">Nb de visites: <b>{{ visiteCount }}</b></p>
   </div>
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
     <ButtonGenerate :isGenerating="isGenerating" text="Generate Tap-In" @emitClick="searchUser()"/>
