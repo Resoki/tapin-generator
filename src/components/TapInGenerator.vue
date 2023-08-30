@@ -4,6 +4,7 @@
     <h1 class="title">{{ title }}</h1>
     <div class="generation-counter">
     <p>Total de génerations déjà effectuées: <b><span class="count">{{ clickCount }}</span></b></p>
+    <p>Total de tapins en stock: <b><span class="count">{{ tapinStock }}</span></b></p>
     <p v-if="visiteCount > 1">Nb de visite: {{ visiteCount }}</p>
   </div>
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
@@ -32,6 +33,7 @@ export default {
   this.displayedIndices = [];
 },
   created() {
+      this.tapinStock = this.tapin.length;
       axios.get('https://reso-site-962417506479.herokuapp.com/record-visite')
         .then((res)=> {
           console.log(res.data);
@@ -80,7 +82,8 @@ export default {
       isGenerating: false,
       displayedIndices: [],
       visiteCount: 0,
-      clickCount: 0
+      clickCount: 0,
+      tapinStock: 0
     }
   },
   computed: {
@@ -126,7 +129,7 @@ export default {
 </script>
 <style scoped>
 .count {
-  font-size: 18px;
+  font-size: 16px;
 }
 .title {
   background-image: linear-gradient(to right, violet, blue);
@@ -162,6 +165,7 @@ export default {
   border-radius: 8px;
   text-align: center;
   max-width: 300px;
+  font-size: 14px;
   margin: 0 auto;
   margin-top: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
