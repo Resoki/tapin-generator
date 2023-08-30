@@ -2,6 +2,7 @@
  <div v-if="contentDisplay" class="box-tapin" >
     <p>{{ contentDisplay }}</p>
     <img class="img-display" :src="imgDisplay" />
+        <button class="download-button" @click="downloadImage">Télécharger l'image</button>
     <a :href="twitterShareUrl" target="_blank" class="share-button">
     Tweeter 
         <img src="../../public/images/share.png" />
@@ -17,6 +18,15 @@ export default {
     imgDisplay: String,
     twitterShareUrl: String
   },
+  methods: {
+     downloadImage() {
+      const link = document.createElement('a');
+      link.href = this.imgDisplay;
+      link.download = 'image.png'; // Nom du fichier téléchargé
+      link.target = '_blank';
+      link.click();
+    }
+  }
 }
 </script>
 <style scoped>
@@ -78,5 +88,22 @@ export default {
 p {
  font-weight: 600;
  font-size: 14px;
+}
+.download-button {
+  background-color: #4caf50;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.download-button:hover {
+  background-color: #45a049;
 }
 </style>

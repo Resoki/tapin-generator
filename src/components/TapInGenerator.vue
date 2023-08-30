@@ -15,7 +15,7 @@
 import FooterComponent from '@/components/FooterComponent.vue';
 import ButtonGenerate from '@/components/ButtonGenerate.vue';
 import GeneratingText from '@/components/GeneratingText.vue'
-import BoxTapin from '../components/BoxTapin.vue';
+import BoxTapin from '@/components/BoxTapin.vue';
 
 export default {
   name: 'TapInGenerator',
@@ -23,6 +23,9 @@ export default {
   props: {
     title: String
   },
+  beforeUnmount() {
+  this.displayedIndices = [];
+},
   data() {
     return {
       tapin: [
@@ -45,7 +48,8 @@ export default {
       txt: '',
       contentDisplay: '',
       imgDisplay: '',
-      isGenerating: false
+      isGenerating: false,
+      displayedIndices: []
     }
   },
   computed: {
@@ -56,17 +60,19 @@ export default {
   methods: {
     objetAleatoire(tab) {
       let indexRd = Math.floor(Math.random() * tab.length);
-      while (indexRd === this.lastImageIndex) {
+      while (this.displayedIndices.includes(indexRd)) {
         indexRd = Math.floor(Math.random() * tab.length);
       }
-      this.lastImageIndex = indexRd;
+      this.displayedIndices.push(indexRd);
       return tab[indexRd];
-    },
-
+  },
     searchUser() {
       this.isGenerating = true;
       this.contentDisplay = null;
       this.imgDisplay = null;
+      if (this.displayedIndices.length === this.tapin.length) {
+        this.displayedIndices = [];
+      }
       setTimeout(()=> {
         const objetAlea = this.objetAleatoire(this.tapin);
         this.txt = objetAlea;
