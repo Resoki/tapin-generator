@@ -100,30 +100,38 @@ export default {
       this.displayedIndices.push(indexRd);
       return tab[indexRd];
   },
-    searchUser() {
-    axios.get('https://reso-site-962417506479.herokuapp.com/record-click')
-      .then((res)=> {
-        console.log('new click', res)
-      })
+    async searchUser() {
+  try {
+    // Premier appel Axios
+    const response1 = await axios.get('https://reso-site-962417506479.herokuapp.com/record-click');
+    console.log('new click', response1);
 
-      axios.get('https://reso-site-962417506479.herokuapp.com/click')
-      .then((res)=> {
-        this.clickCount = res.data.clickCount;
-      })
-      this.isGenerating = true;
-      this.contentDisplay = null;
-      this.imgDisplay = null;
-      if (this.displayedIndices.length === this.tapin.length) {
-        this.displayedIndices = [];
-      }
-      setTimeout(()=> {
-        const objetAlea = this.objetAleatoire(this.tapin);
-        this.txt = objetAlea;
-        this.contentDisplay = objetAlea.content;
-        this.imgDisplay = objetAlea.url;
-        this.isGenerating = false;
-      }, 1000);
+    // Deuxième appel Axios
+    const response2 = await axios.get('https://reso-site-962417506479.herokuapp.com/click');
+    this.clickCount = response2.data.clickCount;
+
+    this.isGenerating = true;
+    this.contentDisplay = null;
+    this.imgDisplay = null;
+
+    if (this.displayedIndices.length === this.tapin.length) {
+      this.displayedIndices = [];
     }
+
+    // Utilisation d'une fonction setTimeout pour retarder l'exécution du code suivant
+    setTimeout(() => {
+      const objetAlea = this.objetAleatoire(this.tapin);
+      this.txt = objetAlea;
+      this.contentDisplay = objetAlea.content;
+      this.imgDisplay = objetAlea.url;
+      this.isGenerating = false;
+    }, 1000);
+  } catch (error) {
+    console.error('Error:', error);
+    // Gérer les erreurs ici
+  }
+}
+
   }
 }
 </script>
