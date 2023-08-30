@@ -1,9 +1,9 @@
 <template>
   <div>
     <img class="x-logo" src="../../public/images/x.png" />
-    <h1>{{ title }}</h1>
+    <h1 class="title">{{ title }}</h1>
     <div class="generation-counter">
-    <p>Total de génerations déjà effectuées: <b>{{ clickCount }}</b></p>
+    <p>Total de génerations déjà effectuées: <b><span class="count">{{ clickCount }}</span></b></p>
     <p v-if="visiteCount > 1">Nb de visite: {{ visiteCount }}</p>
   </div>
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
@@ -125,6 +125,16 @@ export default {
 }
 </script>
 <style scoped>
+.count {
+  font-size: 18px;
+}
+.title {
+  background-image: linear-gradient(to right, violet, blue);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  border: 1px;
+}
 .twitter-button {
   background-color: #1da1f2;
   border: none;
