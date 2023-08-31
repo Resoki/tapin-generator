@@ -21,11 +21,16 @@ import FooterComponent from '@/components/FooterComponent.vue';
 import ButtonGenerate from '@/components/ButtonGenerate.vue';
 import GeneratingText from '@/components/GeneratingText.vue'
 import BoxTapin from '@/components/BoxTapin.vue';
+
+// Modules
 import axios from 'axios';
+
+//Array with all tap-ins
+import arrayTapin from '../arrayTapin.json';
 
 export default {
   name: 'TapInGenerator',
-  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin },
+  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin},
   props: {
     title: String
   },
@@ -35,52 +40,19 @@ export default {
   created() {
     const hasVisited = localStorage.getItem('visitedWebsite');
     if (!hasVisited) {
-      axios.get('https://reso-site-962417506479.herokuapp.com/record-visite')
-        .then((res) => {
-          console.log(res.data);
-        });
-        
+      axios.get('https://reso-site-962417506479.herokuapp.com/record-visite');
       localStorage.setItem('visitedWebsite', true);
     }
       this.tapinStock = this.tapin.length;
       axios.get('https://reso-site-962417506479.herokuapp.com/click')
-        .then((res)=> {
-          this.clickCount = res.data.clickCount;
-        })
+        .then((res)=> this.clickCount = res.data.clickCount);
+
       axios.get('https://reso-site-962417506479.herokuapp.com/visite')
-        .then((res)=> {
-          console.log(res.data);
-       this.visiteCount = res.data.visiteCount;
-        })
+        .then((res)=> this.visiteCount = res.data.visiteCount)
   },
   data() {
     return {
-      tapin: [
-        {content: `On a tous déjà vu dans ça dans nos manuels d'Histoire géo`, url:'images/histoiregeo.jpg'},
-        {content: `On a tous déjà essayer de mettre ça dans notre cxl`, url:'images/cul.jpg'},
-        {content: `J’ai arraché cette puff à un petit qui s’étouffait, heureusement j’étais la`, url:'images/puff.jpg'},
-        {content: `Askip je ressemble à Freeze Corleone`, url:'images/askipfreeze.jpg'},
-        {content: `Askip je ressemble à maitre gims`, url:'images/gims.jpg'},
-        {content: `Askip je ressemble à Mona Lisa`, url:'images/monalisa.jpg'},
-        {content: `Je vais faire une détection à Woippy ! J’espère ils me prendront.`, url:'images/woippychoose.jpg'},
-        {content: `Vous connaissez ce pays ?? !`, url:'images/listenbourg.jpg'},
-        {content: `I need logo to receive my metamask hack wallet !`, url:''},
-        {content: `L'eau dans ces gobelets était pas bonne !`, url:'images/gobelet.jpg'},
-        {content: `Mes écouteurs quand je les sort de ma poche`, url:'images/ecouteurs.jpg'},
-        {content: `On a tous cette fissure`, url:'images/fissure.jpg'},
-        {content: `Moi quand je me cogne le coude`, url:'images/coude.jpg'},
-        {content: `Une relation c'est 50/50`, url:'images/50.jpg'},
-        {content: `Tout le monde aime ce medicament`, url:'images/medic.jpg'},
-        {content: `Fav et commente et je te dis comment je te vois`, url:'images/cmjtevois.jpg'},
-        {content: `- T'as mangé ou tu manges avec nous ? 
-                  - J'ai pas mangé et je mange pas avec vous`, url:'images/tamange.jpg'},
-        {content: `Les petits d’aujourd’hui ils veulent des iPhones alors que moi je voulais ça :`, url:'images/avant.jpg'},
-        {content: `En primaire on a tous connu un mec comme ça : `, url:'images/primaire.jpg'},
-        {content: `Des « hommes » n’ont jamais habité ici : `, url:'images/400k.jpg'},
-        {content: `Les discussions comme ça >>>>>>`, url:'images/discussion.jpg'},
-         {content: `Bah heureusement qu’il l’a raté mdrrrr`, url:'images/rateravion.jpg'},
-          {content: `Ça c’était trop le sandwich de la Hess mdrrr`, url:'images/sandwich.jpg'},
-        ],
+      tapin: arrayTapin,
       txt: '',
       contentDisplay: '',
       imgDisplay: '',
@@ -97,46 +69,41 @@ export default {
     },
   },
   methods: {
-    objetAleatoire(tab) {
-      let indexRd = Math.floor(Math.random() * tab.length);
-      while (this.displayedIndices.includes(indexRd)) {
-        indexRd = Math.floor(Math.random() * tab.length);
-      }
-      this.displayedIndices.push(indexRd);
-      return tab[indexRd];
-  },
-    async searchUser() {
-  try {
-    // Premier appel Axios
-    const response1 = await axios.get('https://reso-site-962417506479.herokuapp.com/record-click');
-    console.log('new click', response1);
-
-    // Deuxième appel Axios
-    const response2 = await axios.get('https://reso-site-962417506479.herokuapp.com/click');
-    this.clickCount = response2.data.clickCount;
-
-    this.isGenerating = true;
-    this.contentDisplay = null;
-    this.imgDisplay = null;
-
-    if (this.displayedIndices.length === this.tapin.length) {
-      this.displayedIndices = [];
+  objetAleatoire(tab) {
+    let indexRd = Math.floor(Math.random() * tab.length);
+    while (this.displayedIndices.includes(indexRd)) {
+      indexRd = Math.floor(Math.random() * tab.length);
     }
+    this.displayedIndices.push(indexRd);
+    return tab[indexRd];
+  },
+  async searchUser() {
+    try {
+      await axios.get('https://reso-site-962417506479.herokuapp.com/record-click');
+      const response2 = await axios.get('https://reso-site-962417506479.herokuapp.com/click');
+      this.clickCount = response2.data.clickCount;
 
-    // Utilisation d'une fonction setTimeout pour retarder l'exécution du code suivant
-    setTimeout(() => {
-      const objetAlea = this.objetAleatoire(this.tapin);
-      this.txt = objetAlea;
-      this.contentDisplay = objetAlea.content;
-      this.imgDisplay = objetAlea.url;
-      this.isGenerating = false;
-    }, 1000);
-  } catch (error) {
-    console.error('Error:', error);
-    // Gérer les erreurs ici
-  }
+      this.isGenerating = true;
+      this.contentDisplay = null;
+      this.imgDisplay = null;
+
+      if (this.displayedIndices.length === this.tapin.length) {
+        this.displayedIndices = [];
+      }
+
+      // Utilisation d'une fonction setTimeout pour retarder l'exécution du code suivant
+      setTimeout(() => {
+        const objetAlea = this.objetAleatoire(this.tapin);
+        this.txt = objetAlea;
+        this.contentDisplay = objetAlea.content;
+        this.imgDisplay = objetAlea.url;
+        this.isGenerating = false;
+      }, 1000);
+    } catch (error) {
+      console.error('Error:', error);
+      // Gérer les erreurs ici
+    }
 }
-
   }
 }
 </script>
