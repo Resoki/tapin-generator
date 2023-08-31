@@ -31,24 +31,19 @@ import arrayTapin from '../arrayTapin.json';
 export default {
   name: 'TapInGenerator',
   components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin},
-  props: {
-    title: String
-  },
+  props: { title: String },
   beforeUnmount() {
-  this.displayedIndices = [];
-},
+    this.displayedIndices = [];
+  },
   created() {
     const hasVisited = localStorage.getItem('visitedWebsite');
     if (!hasVisited) {
-      axios.get('https://reso-site-962417506479.herokuapp.com/record-visite');
+      axios.get(this.recordVisiteLink);
       localStorage.setItem('visitedWebsite', true);
     }
-      this.tapinStock = this.tapin.length;
-      axios.get('https://reso-site-962417506479.herokuapp.com/click')
-        .then((res)=> this.clickCount = res.data.clickCount);
-
-      axios.get('https://reso-site-962417506479.herokuapp.com/visite')
-        .then((res)=> this.visiteCount = res.data.visiteCount)
+    this.tapinStock = this.tapin.length;
+    axios.get(this.clickLink).then((res)=> this.clickCount = res.data.clickCount);
+    axios.get(this.visiteLink).then((res)=> this.visiteCount = res.data.visiteCount);
   },
   data() {
     return {
@@ -60,50 +55,51 @@ export default {
       displayedIndices: [],
       visiteCount: 0,
       clickCount: 0,
-      tapinStock: 0
+      tapinStock: 0,
+      twitterLink: 'https://twitter.com/intent/tweet?text=',
+      visiteLink: 'ttps://reso-site-962417506479.herokuapp.com/visite',
+      clickLink: 'https://reso-site-962417506479.herokuapp.com/click',
+      recordVisiteLink: 'https://reso-site-962417506479.herokuapp.com/record-visite',
+      recordClickLink: 'https://reso-site-962417506479.herokuapp.com/record-click'
     }
   },
   computed: {
     twitterShareUrl() {
-      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.contentDisplay)}`;
+      return `${this.twitterLink}${encodeURIComponent(this.contentDisplay)}`;
     },
   },
   methods: {
-  objetAleatoire(tab) {
-    let indexRd = Math.floor(Math.random() * tab.length);
-    while (this.displayedIndices.includes(indexRd)) {
-      indexRd = Math.floor(Math.random() * tab.length);
-    }
-    this.displayedIndices.push(indexRd);
-    return tab[indexRd];
-  },
-  async searchUser() {
-    try {
-      await axios.get('https://reso-site-962417506479.herokuapp.com/record-click');
-      const response2 = await axios.get('https://reso-site-962417506479.herokuapp.com/click');
-      this.clickCount = response2.data.clickCount;
-
-      this.isGenerating = true;
-      this.contentDisplay = null;
-      this.imgDisplay = null;
-
-      if (this.displayedIndices.length === this.tapin.length) {
-        this.displayedIndices = [];
+    objetAleatoire(tab) {
+      let indexRd = Math.floor(Math.random() * tab.length);
+      while (this.displayedIndices.includes(indexRd)) {
+        indexRd = Math.floor(Math.random() * tab.length);
       }
+      this.displayedIndices.push(indexRd);
+      return tab[indexRd];
+    },
+    async searchUser() {
+      try {
+        await axios.get(this.recordClickLink);
+        const response2 = await axios.get(this.clickLink);
+        this.clickCount = response2.data.clickCount;
 
-      // Utilisation d'une fonction setTimeout pour retarder l'exécution du code suivant
-      setTimeout(() => {
-        const objetAlea = this.objetAleatoire(this.tapin);
-        this.txt = objetAlea;
-        this.contentDisplay = objetAlea.content;
-        this.imgDisplay = objetAlea.url;
-        this.isGenerating = false;
-      }, 1000);
-    } catch (error) {
-      console.error('Error:', error);
-      // Gérer les erreurs ici
-    }
-}
+        this.isGenerating = true;
+        this.contentDisplay = null;
+        this.imgDisplay = null;
+
+        if (this.displayedIndices.length === this.tapin.length) this.displayedIndices = [];
+
+        setTimeout(() => {
+          const objetAlea = this.objetAleatoire(this.tapin);
+          this.txt = objetAlea;
+          this.contentDisplay = objetAlea.content;
+          this.imgDisplay = objetAlea.url;
+          this.isGenerating = false;
+        }, 1000);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+  }
   }
 }
 </script>

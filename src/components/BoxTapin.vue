@@ -2,10 +2,10 @@
  <div v-if="contentDisplay" class="box-tapin" >
     <p>{{ contentDisplay }}</p>
     <img class="img-display" :src="imgDisplay" />
-        <button class="download-button" @click="downloadImage">Télécharger l'image</button>
+      <button class="download-button" @click="downloadImage">Télécharger l'image</button>
     <a :href="twitterShareUrl" target="_blank" class="share-button">
     Tweeter 
-        <img src="../../public/images/share.png" />
+      <img src="../../public/images/share.png" />
     </a>
   </div>
 </template>
@@ -19,10 +19,10 @@ export default {
     twitterShareUrl: String
   },
   methods: {
-     downloadImage() {
+    downloadImage() {
       const link = document.createElement('a');
       link.href = this.imgDisplay;
-      link.download = 'image.png'; // Nom du fichier téléchargé
+      link.download = 'image.png';
       link.target = '_blank';
       link.click();
     }
