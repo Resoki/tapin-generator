@@ -41,7 +41,7 @@ p {
 .separator {
   border: 1px solid grey;
   width: 100%;
-  margin: 10px;
+  margin-top: 10px;
 }
 
 .separator-medium {

@@ -2,11 +2,20 @@
   <div>
     <img class="x-logo" src="../../public/images/x.png" />
     <h1 class="title">{{ title }}</h1>
-    <div class="generation-counter">
-    <p>Total de génerations déjà effectuées: <b><span class="count">{{ clickCount }}</span></b></p>
-    <p>Total de tapins en stock: <b><span class="count">{{ tapinStock }}</span></b></p>
-    <p v-if="visiteCount > 1">Nb de visites: <b>{{ visiteCount }}</b></p>
+    
+
+    <div class="statistics-panel">
+  <div class="statistic">
+    <p>Tapins en stock: <span class="count">{{ tapinStock }}</span></p>
   </div>
+  <div class="statistic">
+    <p>Total de clicks: <span class="count">{{ clickCount }}</span></p>
+  </div>
+  <div class="statistic" v-if="visiteCount > 1">
+    <p>Nb de visites: <span class="count">{{ visiteCount }}</span></p>
+  </div>
+</div>
+
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
     <ButtonGenerate :isGenerating="isGenerating" text="Generate Tap-In" @emitClick="searchUser()"/>
     <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
@@ -137,6 +146,7 @@ export default {
 .x-logo {
   width: 46px;
 }
+
 .generation-counter {
   border-radius: 8px;
   text-align: center;
@@ -148,4 +158,35 @@ export default {
   color: white;
   margin-bottom: 10px;
 }
+
+.statistics-panel {
+  background-color: #3d546a;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 300px; /* Largeur maximale du panneau */
+  margin: 0 auto; /* Pour le centrer horizontalement */
+  text-align: center; /* Centrer le texte */
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.statistic {
+  margin-bottom: 10px; /* Espacement entre les statistiques */
+}
+
+.statistic p {
+  margin: 0;
+  font-size: 12px;
+  color: white;
+}
+
+.count {
+  font-weight: bold;
+  font-size: 18px;
+  color: #1da1f2; /* Couleur Twitter */
+  margin-left: 5px;
+}
+
 </style>
