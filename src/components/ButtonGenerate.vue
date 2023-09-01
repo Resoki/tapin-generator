@@ -1,5 +1,5 @@
 <template>
-    <button v-if="!isGenerating" class="twitter-button" @click="emitClick()">{{text}}</button>
+  <button v-if="!isGenerating" class="twitter-button" @click="emitClick()">{{text}}</button>
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
   },
   methods: {
     emitClick() {
-        this.$emit('emitClick')
+      this.$emit('emitClick')
     }
   }
 }

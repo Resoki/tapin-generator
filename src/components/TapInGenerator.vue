@@ -57,7 +57,7 @@ export default {
       clickCount: 0,
       tapinStock: 0,
       twitterLink: 'https://twitter.com/intent/tweet?text=',
-      visiteLink: 'ttps://reso-site-962417506479.herokuapp.com/visite',
+      visiteLink: 'https://reso-site-962417506479.herokuapp.com/visite',
       clickLink: 'https://reso-site-962417506479.herokuapp.com/click',
       recordVisiteLink: 'https://reso-site-962417506479.herokuapp.com/record-visite',
       recordClickLink: 'https://reso-site-962417506479.herokuapp.com/record-click'
