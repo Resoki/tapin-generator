@@ -26,7 +26,7 @@
       <div class="separator-medium"> </div>
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
     <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
-    <FooterComponent />
+    <FooterComponent :isGenerating="isGenerating"/>
   </div>
 </template>
 
@@ -76,13 +76,16 @@ export default {
       'ahah 🥶🥶🥶🔥🔥🔥ton tweet il était tellement long que j’ai eu le temps de finir one piece😹😹😹🔥🔥🔥🤟🤟même mon daron il a abuse pas autant des emojis 😹😹🤡🤡🔥🔥🔥🥶🥶mais les termes sont utilisés 😁😁😁🔥🔥🔥🔥🥶🥶', 
       'dignité ? noblesse ? honneur ? fierté ? bravoure ? amour propre ? sagesse ? estime de sois ? pudeur ? chasteté ? élégance ? perception de soi ? grandeur?maturité ? virilité ? réputation ? valeur ? gloire ? prestance ? prestige ? respectabilité ? tenue ? délicatesse ?audace ?',
       'gênant',
-      'Masterclass'],
+      'Masterclass',
+      'LES PRODUITS LAITIERS SONT NOS AMIS POUR LA VIE 🐄💀',
+      'Aaahhh gaaaarss 🤣😭😭🥷🥷💸twitter c pas du skate 🛹🛹🛹🛹🛹🛹🛹la vraie question c est ce que tiktok ils ont autant la dalle que comment nous on a la dalle 👿💯💥🔥👻👺🥵😖😖 twitter c cartel de Calí 🇲🇽🇲🇽ça tire pas à blanc 🔫👿🔥💥'],
       txt: '',
       contentDisplay: '',
       contentDisplayPessi: '',
       imgDisplay: '',
       isGenerating: false,
-      displayedIndices: [],
+      displayedIndicesTapin: [],
+      displayedIndicesPessi: [],
       visiteCount: 0,
       clickCountTapin: 0,
       clickCountPessi: 0,
@@ -105,12 +108,12 @@ export default {
     },
   },
   methods: {
-    objetAleatoire(tab) {
+    objetAleatoire(tabEmpty, tab) {
       let indexRd = Math.floor(Math.random() * tab.length);
-      while (this.displayedIndices.includes(indexRd)) {
+      while (tabEmpty.includes(indexRd)) {
         indexRd = Math.floor(Math.random() * tab.length);
       }
-      this.displayedIndices.push(indexRd);
+      tabEmpty.push(indexRd);
       return tab[indexRd];
     },
     closePopup() {
@@ -119,7 +122,6 @@ export default {
     },
     async searchUser() {
       try {
-        console.log('e')
        await axios.get(this.recordClickTapinLink);
         const response2 = await axios.get(this.clickLinkTapin);
         this.clickCountTapin = response2.data.clickCount;
@@ -129,10 +131,10 @@ export default {
         this.contentDisplayPessi = null;
         this.imgDisplay = null;
 
-        if (this.displayedIndices.length === this.tapin.length) this.displayedIndices = [];
+        if (this.displayedIndicesTapin.length === this.tapin.length) this.displayedIndicesTapin = [];
 
         setTimeout(() => {
-          const objetAlea = this.objetAleatoire(this.tapin);
+          const objetAlea = this.objetAleatoire(this.displayedIndicesTapin, this.tapin);
           this.txt = objetAlea;
           this.contentDisplay = objetAlea.content;
           this.imgDisplay = objetAlea.url;
@@ -149,13 +151,13 @@ export default {
           this.clickCountPessi = response2.data.clickCount;
 
           this.isGenerating = true;
-          this.contentDisplay = null;
+          this.contentDisplayPessi = null;
           this.imgDisplay = null;
 
-          if (this.displayedIndices.length === this.tapin.length) this.displayedIndices = [];
+          if (this.displayedIndicesPessi.length === this.textPessi.length) this.displayedIndicesPessi= [];
 
           setTimeout(() => {
-            const objetAlea = this.objetAleatoire(this.textPessi);
+            const objetAlea = this.objetAleatoire(this.displayedIndicesPessi, this.textPessi);
             this.txt = objetAlea;
             this.contentDisplayPessi = objetAlea;
             this.isGenerating = false;

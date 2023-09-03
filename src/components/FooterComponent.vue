@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-      <div class="separator"> </div>
+      <div v-if="!isGenerating" class="separator"> </div>
     <div class="box-footer-name">
       <p>Tu veux voir ton tapin ici ?<br> Envoit un DM à <b><a class="link-reso" href="https://twitter.com/resoquibug" target='_blank'>@resoquibug</a></b></p>
         <div class="separator-medium"> </div>
@@ -13,6 +13,7 @@
 <script>
 export default {
   name: 'FooterComponent',
+  props: { isGenerating: Boolean}
 }
 </script>
 <style scoped>
