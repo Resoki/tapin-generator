@@ -1,14 +1,15 @@
 <template>
   <div>
-    <img class="x-logo" src="../../public/images/x.png" />
-    <h1 class="title">{{ title }}</h1>
+    <img class="x-logo" src="../../public/images/x-logo.png" />
+    <h1 class="title">{{ title.slice(0,7)}} / <span class="span-pessi">Pessi</span> Generator</h1>
     <div class="statistics-panel">
   <div class="statistic">
-    <p>Tapins en stock: <span class="count">{{ tapinStock }}</span></p>
+    <p>Items en stock: <span class="count">{{ tapinStock + pessiStock }}</span></p>
   </div>
  <div class="statistic">
   <p>Total de clicks: 
     <span class="count tapin-click"> {{ clickCountTapin + clickCountPessi }} </span>
+
     <span class="total-clicks">
     </span>
   </p>
@@ -19,8 +20,8 @@
 </div>
 
     <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in ou alors clique sur le deuxième pour générer un texte de pessi !</p>
-    <ButtonGenerate :isGenerating="isGenerating" text="Generate Tap-In" @emitClick="searchUser()"/>
-    <ButtonGenerate :isGenerating="isGenerating" text="Generate Text Pessi" @emitClick="searchPessiText()"/>
+    <ButtonGenerate :isGenerating="isGenerating" text="Generer un Tap-In" @emitClick="searchUser()"/>
+    <ButtonGenerate :isGenerating="isGenerating" text="Generate un texte Pessi" @emitClick="searchPessiText()"/>
     <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
       <div class="separator-medium"> </div>
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
@@ -57,6 +58,7 @@ export default {
       localStorage.setItem('visitedWebsite', true);
     }
     this.tapinStock = this.tapin.length;
+    this.pessiStock = this.textPessi.length;
     axios.get(this.clickLinkTapin).then((res)=> {
       console.log('created clicklink',res.data )
       this.clickCountTapin = res.data.clickCount
@@ -73,7 +75,8 @@ export default {
       textPessi: ['Un sentiment de malaise,de gène 😵‍💫 travers mon corps 🙊 je ne sais pas quoi dire.Peut-être que je devrais te conseiller de supprimer ce tweet😅ou bien te démontrer a quel point tu es un Flop’Zer 🏴‍☠️⚔️ Mais bon, la vie est fait ainsi soit du coule 🤙🏼soit tu deviens un finito 🥵', 
       'ahah 🥶🥶🥶🔥🔥🔥ton tweet il était tellement long que j’ai eu le temps de finir one piece😹😹😹🔥🔥🔥🤟🤟même mon daron il a abuse pas autant des emojis 😹😹🤡🤡🔥🔥🔥🥶🥶mais les termes sont utilisés 😁😁😁🔥🔥🔥🔥🥶🥶', 
       'dignité ? noblesse ? honneur ? fierté ? bravoure ? amour propre ? sagesse ? estime de sois ? pudeur ? chasteté ? élégance ? perception de soi ? grandeur?maturité ? virilité ? réputation ? valeur ? gloire ? prestance ? prestige ? respectabilité ? tenue ? délicatesse ?audace ?',
-      'gênant'],
+      'gênant',
+      'Masterclass'],
       txt: '',
       contentDisplay: '',
       contentDisplayPessi: '',
@@ -207,9 +210,16 @@ export default {
 }
 
 .x-logo {
-  width: 46px;
+  width: 92px;
 }
 
+.span-pessi {
+  background-image: linear-gradient(to right, rgb(156, 109, 63), rgb(246, 186, 7));
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  border: 1px;
+}
 .separator {
   border: 1px solid grey;
   width: 100%;
