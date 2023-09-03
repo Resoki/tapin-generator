@@ -2,24 +2,29 @@
   <div>
     <img class="x-logo" src="../../public/images/x.png" />
     <h1 class="title">{{ title }}</h1>
-    
-
     <div class="statistics-panel">
   <div class="statistic">
     <p>Tapins en stock: <span class="count">{{ tapinStock }}</span></p>
   </div>
-  <div class="statistic">
-    <p>Total de clicks: <span class="count">{{ clickCount }}</span></p>
-  </div>
+ <div class="statistic">
+  <p>Total de clicks: 
+    <span class="count tapin-click"> {{ clickCountTapin + clickCountPessi }} </span>
+    <span class="total-clicks">
+    </span>
+  </p>
+</div>
   <div class="statistic" v-if="visiteCount > 1">
     <p>Nb de visites: <span class="count">{{ visiteCount }}</span></p>
   </div>
 </div>
 
-    <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in !</p>
+    <p v-if="!contentDisplay && !isGenerating">Clique sur le button ci dessous pour générer un tap-in ou alors clique sur le deuxième pour générer un texte de pessi !</p>
     <ButtonGenerate :isGenerating="isGenerating" text="Generate Tap-In" @emitClick="searchUser()"/>
+    <ButtonGenerate :isGenerating="isGenerating" text="Generate Text Pessi" @emitClick="searchPessiText()"/>
     <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
-    <BoxTapin :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
+      <div class="separator-medium"> </div>
+    <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
+    <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
     <FooterComponent />
   </div>
 </template>
@@ -30,6 +35,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
 import ButtonGenerate from '@/components/ButtonGenerate.vue';
 import GeneratingText from '@/components/GeneratingText.vue'
 import BoxTapin from '@/components/BoxTapin.vue';
+import PessiText from '@/components/PessiText.vue'
 
 // Modules
 import axios from 'axios';
@@ -39,7 +45,7 @@ import arrayTapin from '../arrayTapin.json';
 
 export default {
   name: 'TapInGenerator',
-  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin},
+  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin, PessiText},
   props: { title: String },
   beforeUnmount() {
     this.displayedIndices = [];
@@ -51,30 +57,48 @@ export default {
       localStorage.setItem('visitedWebsite', true);
     }
     this.tapinStock = this.tapin.length;
-    axios.get(this.clickLink).then((res)=> this.clickCount = res.data.clickCount);
+    axios.get(this.clickLinkTapin).then((res)=> {
+      console.log('created clicklink',res.data )
+      this.clickCountTapin = res.data.clickCount
+    });
+    axios.get(this.clickLinkPessi).then((res)=> {
+      console.log('created clicklink',res.data )
+      this.clickCountPessi = res.data.clickCount
+    });
     axios.get(this.visiteLink).then((res)=> this.visiteCount = res.data.visiteCount);
   },
   data() {
     return {
       tapin: arrayTapin,
+      textPessi: ['Un sentiment de malaise,de gène 😵‍💫 travers mon corps 🙊 je ne sais pas quoi dire.Peut-être que je devrais te conseiller de supprimer ce tweet😅ou bien te démontrer a quel point tu es un Flop’Zer 🏴‍☠️⚔️ Mais bon, la vie est fait ainsi soit du coule 🤙🏼soit tu deviens un finito 🥵', 
+      'ahah 🥶🥶🥶🔥🔥🔥ton tweet il était tellement long que j’ai eu le temps de finir one piece😹😹😹🔥🔥🔥🤟🤟même mon daron il a abuse pas autant des emojis 😹😹🤡🤡🔥🔥🔥🥶🥶mais les termes sont utilisés 😁😁😁🔥🔥🔥🔥🥶🥶', 
+      'dignité ? noblesse ? honneur ? fierté ? bravoure ? amour propre ? sagesse ? estime de sois ? pudeur ? chasteté ? élégance ? perception de soi ? grandeur?maturité ? virilité ? réputation ? valeur ? gloire ? prestance ? prestige ? respectabilité ? tenue ? délicatesse ?audace ?',
+      'gênant'],
       txt: '',
       contentDisplay: '',
+      contentDisplayPessi: '',
       imgDisplay: '',
       isGenerating: false,
       displayedIndices: [],
       visiteCount: 0,
-      clickCount: 0,
+      clickCountTapin: 0,
+      clickCountPessi: 0,
       tapinStock: 0,
       twitterLink: 'https://twitter.com/intent/tweet?text=',
       visiteLink: 'https://reso-site-962417506479.herokuapp.com/visite',
-      clickLink: 'https://reso-site-962417506479.herokuapp.com/click',
+      clickLinkPessi: 'https://reso-site-962417506479.herokuapp.com/click-pessi',
+      clickLinkTapin: 'https://reso-site-962417506479.herokuapp.com/click-tapin',
       recordVisiteLink: 'https://reso-site-962417506479.herokuapp.com/record-visite',
-      recordClickLink: 'https://reso-site-962417506479.herokuapp.com/record-click'
+      recordClickTapinLink: 'https://reso-site-962417506479.herokuapp.com/record-click-tapin',
+      recordClickPessiLink: 'https://reso-site-962417506479.herokuapp.com/record-click-pessi'
     }
   },
   computed: {
     twitterShareUrl() {
       return `${this.twitterLink}${encodeURIComponent(this.contentDisplay)}`;
+    },
+    twitterShareUrlPessiText() {
+      return `${this.twitterLink}${encodeURIComponent(this.contentDisplayPessi)}`;
     },
   },
   methods: {
@@ -86,14 +110,20 @@ export default {
       this.displayedIndices.push(indexRd);
       return tab[indexRd];
     },
+    closePopup() {
+      this.contentDisplay = null;
+      this.contentDisplayPessi = null;
+    },
     async searchUser() {
       try {
-        await axios.get(this.recordClickLink);
-        const response2 = await axios.get(this.clickLink);
-        this.clickCount = response2.data.clickCount;
+        console.log('e')
+       await axios.get(this.recordClickTapinLink);
+        const response2 = await axios.get(this.clickLinkTapin);
+        this.clickCountTapin = response2.data.clickCount;
 
         this.isGenerating = true;
         this.contentDisplay = null;
+        this.contentDisplayPessi = null;
         this.imgDisplay = null;
 
         if (this.displayedIndices.length === this.tapin.length) this.displayedIndices = [];
@@ -108,13 +138,45 @@ export default {
       } catch (error) {
         console.error('Error:', error);
       }
-  }
+  },
+      async searchPessiText() {
+        try {
+          await axios.get(this.recordClickPessiLink);
+          const response2 = await axios.get(this.clickLinkPessi);
+          this.clickCountPessi = response2.data.clickCount;
+
+          this.isGenerating = true;
+          this.contentDisplay = null;
+          this.imgDisplay = null;
+
+          if (this.displayedIndices.length === this.tapin.length) this.displayedIndices = [];
+
+          setTimeout(() => {
+            const objetAlea = this.objetAleatoire(this.textPessi);
+            this.txt = objetAlea;
+            this.contentDisplayPessi = objetAlea;
+            this.isGenerating = false;
+          }, 1000);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+     }
   }
 }
 </script>
 <style scoped>
 .count {
   font-size: 16px;
+}
+.total-clicks {
+  font-weight: bold;
+  font-size: 16px;
+  color: #1da1f2; /* Couleur Twitter */
+  margin-left: 5px;
+}
+
+.edit {
+  font-size: 10px !important;
 }
 .title {
   background-image: linear-gradient(to right, violet, blue);
@@ -132,6 +194,7 @@ export default {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 10px;
 }
 
 .twitter-button:hover {
@@ -145,6 +208,12 @@ export default {
 
 .x-logo {
   width: 46px;
+}
+
+.separator {
+  border: 1px solid grey;
+  width: 100%;
+  margin-top: 10px;
 }
 
 .generation-counter {

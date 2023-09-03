@@ -2,10 +2,8 @@
   <div v-if="contentDisplay" class="box-tapin">
     <button @click="onClosePopup" class="close-button">X</button>
     <p>{{ contentDisplay }}</p>
-    <img class="img-display" :src="imgDisplay" />
-    <button class="download-button">Télécharger l'image</button>
     <a :href="twitterShareUrl" target="_blank" class="share-button">
-      Tweeter
+      Tweeter 
       <img src="../../public/images/share.png" />
     </a>
   </div>
@@ -13,20 +11,12 @@
 
 <script>
 export default {
-  name: 'BoxTapin',
+  name: 'PessiText',
   props: {
-    contentDisplay: String ,
-    imgDisplay: String,
+    contentDisplay: String,
     twitterShareUrl: String
   },
   methods: {
-    downloadImage() {
-      const link = document.createElement('a');
-      link.href = this.imgDisplay;
-      link.download = 'image.png';
-      link.target = '_blank';
-      link.click();
-    },
     onClosePopup() {
       this.$emit('close-popup');
     }
@@ -48,7 +38,6 @@ export default {
   margin-top: 10px !important;
   max-width: 400px;
   background-color: #f5f5f5;
-  margin-bottom: 10px;
 }
 
 .close-button {
@@ -64,7 +53,7 @@ export default {
 }
 
 .close-button:hover {
-  color: red;
+    color: red;
 }
 
 .img-display {
@@ -108,12 +97,10 @@ export default {
 .share-button:hover {
   background-color: #1991da;
 }
-
 p {
-  font-weight: 600;
-  font-size: 14px;
+ font-weight: 600;
+ font-size: 14px;
 }
-
 .download-button {
   background-color: #4caf50;
   border: none;
