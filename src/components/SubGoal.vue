@@ -53,6 +53,7 @@ export default {
 }
 
 .subscribe-button {
+    width: 160px;
   background-color: rgb(101, 72, 231);
   color: white;
   border: none;

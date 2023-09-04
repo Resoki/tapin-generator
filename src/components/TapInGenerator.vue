@@ -20,8 +20,8 @@
 </div>
 
     <p v-if="!contentDisplay && !isGenerating">Clique sur un des boutons pour générer un tap-in ou un texte pessi</p>
-    <ButtonGenerate :isGenerating="isGenerating" text="Generer Tap-In" @emitClick="searchUser()"/>
-    <ButtonGenerate :isGenerating="isGenerating" text="Generer texte Pessi" @emitClick="searchPessiText()"/>
+    <ButtonGenerate :isGenerating="isGenerating" image="/images/graphique.png" text="Générer Tap-In" @emitClick="searchUser()"/>
+    <ButtonGenerate :isGenerating="isGenerating" image="/images/pleurs.png" text="Générer texte Pessi" @emitClick="searchPessiText()"/>
     <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
       <div class="separator-medium"> </div>
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
