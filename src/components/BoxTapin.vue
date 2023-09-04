@@ -53,7 +53,7 @@ export default {
 
 .close-button {
   position: absolute;
-  top: 10px;
+  top: 2px;
   right: 10px;
   background: none;
   border: none;
