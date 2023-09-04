@@ -5,7 +5,7 @@
       <p>{{ count }}/500 followers</p>
     </div>
     <div class="w3-border">
-      <div class="w3-grey" style="height: 24px;" :style="{ width: progressStyle }"></div>
+      <div class="w3-grey color" style="height: 24px;" :style="{ width: progressStyle }"></div>
     </div>
     <button class="subscribe-button" @click="redirectToTwitter">S'abonner à Reso</button>
   </div>
@@ -40,6 +40,11 @@ export default {
   margin-top: 10px;
 }
 
+.color {
+    border-radius: 10px;
+    background-color: #6548e7 !important;
+}
+
 .img-reso {
   width: 34px;
   height: 34px;
@@ -50,13 +55,15 @@ export default {
 .w3-border {
   width: 140px;
   margin: 0 auto;
+  border-radius: 10px;
 }
 
 .subscribe-button {
-    width: 160px;
+  width: 160px;
   background-color: rgb(101, 72, 231);
   color: white;
   border: none;
+  border-radius: 12px;
   padding: 10px 20px;
   margin-top: 10px;
   cursor: pointer;
