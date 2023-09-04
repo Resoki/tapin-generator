@@ -8,7 +8,7 @@
   </div>
  <div class="statistic">
   <p>Total de clicks: 
-    <span class="count tapin-click"> {{ clickCountTapin + clickCountPessi }} </span>
+    <span class="count tapin-click"> {{ clickCountTapin + clickCountPessi }}<span :v-if="clickIncrement.length" class="total-clicks">{{ clickIncrement }}</span> </span>
 
     <span class="total-clicks">
     </span>
@@ -73,6 +73,7 @@ export default {
   },
   data() {
     return {
+      clickIncrement: '',
       tapin: arrayTapin,
       textPessi: ['Un sentiment de malaise,de gène 😵‍💫 travers mon corps 🙊 je ne sais pas quoi dire.Peut-être que je devrais te conseiller de supprimer ce tweet😅ou bien te démontrer a quel point tu es un Flop’Zer 🏴‍☠️⚔️ Mais bon, la vie est fait ainsi soit du coule 🤙🏼soit tu deviens un finito 🥵', 
       'ahah 🥶🥶🥶🔥🔥🔥ton tweet il était tellement long que j’ai eu le temps de finir one piece😹😹😹🔥🔥🔥🤟🤟même mon daron il a abuse pas autant des emojis 😹😹🤡🤡🔥🔥🔥🥶🥶mais les termes sont utilisés 😁😁😁🔥🔥🔥🔥🥶🥶', 
@@ -146,7 +147,7 @@ export default {
        await axios.get(this.recordClickTapinLink);
         const response2 = await axios.get(this.clickLinkTapin);
         this.clickCountTapin = response2.data.clickCount;
-
+        this.clickIncrement = '+1';
         this.isGenerating = true;
         this.contentDisplay = null;
         this.contentDisplayPessi = null;
@@ -161,6 +162,9 @@ export default {
           this.imgDisplay = objetAlea.url;
           this.isGenerating = false;
         }, 1000);
+        setTimeout(() => {
+          this.clickIncrement = '';
+        }, 1000);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -170,7 +174,7 @@ export default {
           await axios.get(this.recordClickPessiLink);
           const response2 = await axios.get(this.clickLinkPessi);
           this.clickCountPessi = response2.data.clickCount;
-
+          this.clickIncrement = '+1';
           this.isGenerating = true;
           this.contentDisplayPessi = null;
           this.imgDisplay = null;
@@ -182,6 +186,9 @@ export default {
             this.txt = objetAlea;
             this.contentDisplayPessi = objetAlea;
             this.isGenerating = false;
+          }, 1000);
+          setTimeout(() => {
+          this.clickIncrement = '';
           }, 1000);
         } catch (error) {
           console.error('Error:', error);
@@ -210,6 +217,7 @@ export default {
   -webkit-background-clip: text;
   background-clip: text;
   border: 1px;
+  font-weight: bold;
 }
 .twitter-button {
   background-color: #1da1f2;
