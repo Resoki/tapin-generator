@@ -176,6 +176,7 @@ export default {
           this.clickCountPessi = response2.data.clickCount;
           this.clickIncrement = '+1';
           this.isGenerating = true;
+           this.contentDisplay = null;
           this.contentDisplayPessi = null;
           this.imgDisplay = null;
 
