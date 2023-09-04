@@ -26,6 +26,7 @@
       <div class="separator-medium"> </div>
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
     <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
+    <SubGoal count="261"/>
     <FooterComponent :isGenerating="isGenerating"/>
   </div>
 </template>
@@ -37,6 +38,7 @@ import ButtonGenerate from '@/components/ButtonGenerate.vue';
 import GeneratingText from '@/components/GeneratingText.vue'
 import BoxTapin from '@/components/BoxTapin.vue';
 import PessiText from '@/components/PessiText.vue'
+import SubGoal from './SubGoal.vue';
 
 // Modules
 import axios from 'axios';
@@ -46,7 +48,7 @@ import arrayTapin from '../arrayTapin.json';
 
 export default {
   name: 'TapInGenerator',
-  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin, PessiText},
+  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin, PessiText, SubGoal},
   props: { title: String },
   beforeUnmount() {
     this.displayedIndices = [];
@@ -95,7 +97,9 @@ export default {
       'Un jour je serais 🤖 le meilleur Pessi 👨‍🦲👨‍🦲 Je me battrais 🥋 sans répit 😴😴😴 Je ferais tout pour être vainqueur 🏆🏆🏆🏆 et gagner les défis ⛹️⛹️⛹️ je parcourrais 🏃 la Terre entière 🌍🌍🌍🌍 combattant avec espoir 🙏🏾🙏🏾 les Pessi et leurs mystères 🤫🤫🤫🤫',
       'Fb et reste digne akhy',
       'Qui sont les pessi? Qui sommes nous? Des génies venus dailleurs, des monstres goatesque, des extraterrestres ultra-talentueux, des intellectuels, une communauté soudée et efficace ne cédant pas sous loppression. Nous sommes dignes. Chouine en silence. #PessiLivesMatter',
-      'Et soudain, le malaise se fit sentir. Drôle de sentiment que d’être subitement gêné par le commentaire d’une fraude comme celle ci-dessus. Ce fut une expérience glacante..'],
+      'Et soudain, le malaise se fit sentir. Drôle de sentiment que d’être subitement gêné par le commentaire d’une fraude comme celle ci-dessus. Ce fut une expérience glacante..', 
+      'il y a 2 266 100 Pessis et 37 ministres au gouvernement. Donc si les Pessis décident denvahir lÉlysée, chaque ministre doit combattre 60 174 Pessis',
+      'tu es immensément frauduleux + supprime + ratio + gênant + miaule sans jacasser'],
       txt: '',
       contentDisplay: '',
       contentDisplayPessi: '',
