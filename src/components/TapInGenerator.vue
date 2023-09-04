@@ -20,13 +20,13 @@
 </div>
 
     <p v-if="!contentDisplay && !isGenerating">Clique sur un des boutons pour générer un tap-in ou un texte pessi</p>
-    <ButtonGenerate :isGenerating="isGenerating" image="/images/graphique.png" text="Générer Tap-In" @emitClick="searchUser()"/>
-    <ButtonGenerate :isGenerating="isGenerating" image="/images/pleurs.png" text="Générer texte Pessi" @emitClick="searchPessiText()"/>
+    <ButtonGenerate class="button-hover-animation" :isGenerating="isGenerating" image="/images/graphique.png" text="Générer Tap-In" @emitClick="searchUser()"/>
+    <ButtonGenerate class="button-hover-animation" :isGenerating="isGenerating" image="/images/pleurs.png" text="Générer texte Pessi" @emitClick="searchPessiText()"/>
     <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
       <div class="separator-medium"> </div>
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
     <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
-    <SubGoal count="261"/>
+    <SubGoal count="265"/>
     <FooterComponent :isGenerating="isGenerating"/>
   </div>
 </template>
@@ -176,7 +176,7 @@ export default {
           this.clickCountPessi = response2.data.clickCount;
           this.clickIncrement = '+1';
           this.isGenerating = true;
-           this.contentDisplay = null;
+          this.contentDisplay = null;
           this.contentDisplayPessi = null;
           this.imgDisplay = null;
 
@@ -212,6 +212,13 @@ export default {
 .edit {
   font-size: 10px !important;
 }
+.button-hover-animation {
+  transition: transform 0.2s ease-in-out;
+}
+
+.button-hover-animation:hover {
+  transform: scale(0.95); /* Rétrécissement lors du survol */
+}
 .title {
   background-image: linear-gradient(to right, violet, blue);
   color: transparent;
@@ -234,6 +241,7 @@ export default {
 
 .twitter-button:hover {
   background-color: #1991da;
+  font-weight: bold;
 }
 
 .twitter-button:focus {
