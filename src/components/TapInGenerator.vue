@@ -26,7 +26,7 @@
       <div class="separator-medium"> </div>
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
     <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
-    <SubGoal count="280"/>
+    <SubGoal count="287"/>
     <FooterComponent :isGenerating="isGenerating"/>
   </div>
 </template>
