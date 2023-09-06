@@ -4,14 +4,16 @@
     <p>{{ contentDisplay }}</p>
     <img class="img-display" :src="imgDisplay" />
     <button class="download-button">Télécharger l'image</button>
-    <a :href="twitterShareUrl" target="_blank" class="share-button">
-      Tweeter
-      <img src="../../public/images/share.png" />
-    </a>
+    <div class="button-container">
+      <a :href="twitterShareUrl" target="_blank" class="share-button">
+        Tweeter
+        <img src="../../public/images/share.png" />
+      </a>
+    </div>
   </div>
 </template>
-
 <script>
+
 export default {
   name: 'BoxTapin',
   props: {
@@ -19,14 +21,9 @@ export default {
     imgDisplay: String,
     twitterShareUrl: String
   },
+  components: {
+  },
   methods: {
-    downloadImage() {
-      const link = document.createElement('a');
-      link.href = this.imgDisplay;
-      link.download = 'image.png';
-      link.target = '_blank';
-      link.click();
-    },
     onClosePopup() {
       this.$emit('close-popup');
     }
@@ -43,13 +40,26 @@ export default {
   padding: 16px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center; /* Centrer les éléments horizontalement */
+  justify-content: center; /* Centrer les éléments verticalement */
   margin: 0 auto;
   margin-top: 10px !important;
   max-width: 400px;
   background-color: #f5f5f5;
   margin-bottom: 10px;
 }
+
+/* ... Styles pour les autres éléments ... */
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centrer les boutons horizontalement */
+  margin-top: 10px;
+}
+
+/* ... Styles pour les boutons ... */
+
 
 .close-button {
   position: absolute;
@@ -130,5 +140,30 @@ p {
 
 .download-button:hover {
   background-color: #45a049;
+}
+
+.copy-button {
+  margin-left: 10px;
+  margin-right: 4px;
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  background-color: #ff9800;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: white;
+}
+
+.copy-button img {
+  width: 24px;
+  height: 24px;
+}
+
+.copy-button:hover {
+  background-color: #e68a00;
 }
 </style>

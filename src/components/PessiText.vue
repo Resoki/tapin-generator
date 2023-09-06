@@ -2,6 +2,7 @@
   <div v-if="contentDisplay" class="box-tapin">
     <button @click="onClosePopup" class="close-button">X</button>
     <p>{{ contentDisplay }}</p>
+    <CopyComponent :textCopy="contentDisplay" />
     <a :href="twitterShareUrl" target="_blank" class="share-button">
       Tweeter 
       <img src="../../public/images/share.png" />
@@ -10,6 +11,7 @@
 </template>
 
 <script>
+import CopyComponent from './CopyComponent.vue';
 export default {
   name: 'PessiText',
   props: {
@@ -19,7 +21,10 @@ export default {
   methods: {
     onClosePopup() {
       this.$emit('close-popup');
-    }
+    },
+  },
+  components: {
+    CopyComponent
   }
 }
 </script>
@@ -33,7 +38,8 @@ export default {
   padding: 16px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center; /* Centrer les éléments horizontalement */
+  justify-content: center; /* Centrer les éléments verticalement */
   margin: 0 auto;
   margin-top: 10px !important;
   max-width: 400px;

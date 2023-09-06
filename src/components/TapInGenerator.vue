@@ -26,7 +26,7 @@
       <div class="separator-medium"> </div>
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
     <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
-    <SubGoal count="301"/>
+    <SubGoal count="314"/>
     <FooterComponent :isGenerating="isGenerating"/>
   </div>
 </template>
@@ -63,11 +63,11 @@ export default {
     this.pessiStock = this.textPessi.length;
     axios.get(this.clickLinkTapin).then((res)=> {
       console.log('created clicklink',res.data )
-      this.clickCountTapin = res.data.clickCount
+      this.clickCountTapin = res.data.clickCount;
     });
     axios.get(this.clickLinkPessi).then((res)=> {
       console.log('created clicklink',res.data )
-      this.clickCountPessi = res.data.clickCount
+      this.clickCountPessi = res.data.clickCount;
     });
     axios.get(this.visiteLink).then((res)=> this.visiteCount = res.data.visiteCount);
   },
