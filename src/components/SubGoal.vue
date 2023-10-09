@@ -42,8 +42,8 @@ export default {
 }
 
 .color {
-    border-radius: 10px;
-    background-color: #6548e7 !important;
+  border-radius: 10px;
+  background-color: #6548e7 !important;
 }
 
 .img-reso {
