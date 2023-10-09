@@ -16,10 +16,11 @@ export default {
   name: 'SubGoal',
   props: {
     count: Number,
+    objective: Number
   },
   computed: {
     progressStyle() {
-      const percentage = (this.count / 1000) * 100;
+      const percentage = (this.count / this.objective) * 100;
       return `${percentage}%`;
     },
   },
@@ -28,11 +29,6 @@ export default {
       window.location.href = 'https://twitter.com/resoquibug';
     },
   },
-  data(){
-    return {
-      objective: 1000
-    }
-  }
 };
 </script>
 
