@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     progressStyle() {
-      const percentage = (this.count / 500) * 100;
+      const percentage = (this.count / 1000) * 100;
       return `${percentage}%`;
     },
   },
