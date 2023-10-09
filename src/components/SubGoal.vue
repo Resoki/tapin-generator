@@ -2,7 +2,7 @@
   <div>
     <div class="sub-goal-header">
       <img class="img-reso" src="../../public/images/reso.jpg"/>
-      <p>{{ count }}/500 followers</p>
+      <p>{{ count }}/1000 followers</p>
     </div>
     <div class="w3-border">
       <div class="w3-grey color" style="height: 24px;" :style="{ width: progressStyle }"></div>
