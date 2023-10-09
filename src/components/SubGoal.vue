@@ -69,7 +69,6 @@ export default {
   margin-top: 10px;
   cursor: pointer;
 }
-
 .subscribe-button:hover {
   background-color: rgb(98, 60, 211);
 }
