@@ -228,6 +228,8 @@ export default {
   background-clip: text;
   border: 1px;
   font-weight: bold;
+  font-size: 32px;
+  font-family: fantasy;
 }
 .twitter-button {
   background-color: #1da1f2;
@@ -285,12 +287,18 @@ export default {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  max-width: 300px; /* Largeur maximale du panneau */
+  max-width: 350px; /* Largeur maximale du panneau */
   margin: 0 auto; /* Pour le centrer horizontalement */
   text-align: center; /* Centrer le texte */
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+  font-family: Montserrat, sans-serif;
+  color: black;
+  box-shadow:
+  inset blue 0 0 0 5px, 
+  inset rgb(128 62 168) 0 0 0 10px;
+  text-shadow: 1px 1px 1px black;
 }
 
 .statistic {
@@ -298,7 +306,6 @@ export default {
 }
 
 .statistic p {
-  margin: 0;
   font-size: 12px;
   color: white;
 }
