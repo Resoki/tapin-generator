@@ -2,7 +2,7 @@
   <div>
     <div class="sub-goal-header">
       <img class="img-reso" src="../../public/images/reso.jpg"/>
-      <p>{{ count }}/1000 followers</p>
+      <p>{{ count }}/{{this.objective}} followers</p>
     </div>
     <div class="w3-border">
       <div class="w3-grey color" style="height: 24px;" :style="{ width: progressStyle }"></div>
@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     progressStyle() {
-      const percentage = (this.count / 1000) * 100;
+      const percentage = (this.count / this.objective) * 100;
       return `${percentage}%`;
     },
   },
@@ -28,6 +28,11 @@ export default {
       window.location.href = 'https://twitter.com/resoquibug';
     },
   },
+  data(){
+    return {
+      objective: 1000
+    }
+  }
 };
 </script>
 
