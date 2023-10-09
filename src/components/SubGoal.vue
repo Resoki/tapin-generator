@@ -72,4 +72,5 @@ export default {
 .subscribe-button:hover {
   background-color: rgb(98, 60, 211);
 }
+
 </style>
