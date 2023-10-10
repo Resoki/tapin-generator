@@ -220,7 +220,6 @@ export default {
   border: 1px;
   font-weight: bold;
   font-size: 32px;
-  font-family: fantasy;
 }
 .twitter-button {
   background-color: #1da1f2;
