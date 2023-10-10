@@ -16,13 +16,19 @@ export default {
   name: 'SubGoal',
   props: {
     count: Number,
-    objective: Number
+  },
+  data() {
+    return {
+      objective: 1000
+    }
   },
   computed: {
     progressStyle() {
-      const percentage = (this.count / this.objective) * 100;
-      return `${percentage}%`;
+      return `${(this.count / this.objective) * 100}%`;
     },
+  },
+  created() {
+    if(this.count > 1000) this.objective = 1500;
   },
   methods: {
     redirectToTwitter() {

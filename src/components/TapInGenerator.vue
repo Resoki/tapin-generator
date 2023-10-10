@@ -26,7 +26,7 @@
       <div class="separator-medium"> </div>
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
     <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
-    <SubGoal count="607" objective="1000"/>
+    <SubGoal :count="countApi"/>
     <FooterComponent :isGenerating="isGenerating"/>
   </div>
 </template>
@@ -54,6 +54,7 @@ export default {
     this.displayedIndices = [];
   },
   created() {
+    this.refreshFollowCount()
     const hasVisited = localStorage.getItem('visitedWebsite');
     if (!hasVisited) {
       axios.get(this.recordVisiteLink);
@@ -62,11 +63,9 @@ export default {
     this.tapinStock = this.tapin.length;
     this.pessiStock = this.textPessi.length;
     axios.get(this.clickLinkTapin).then((res)=> {
-      console.log('created clicklink',res.data )
       this.clickCountTapin = res.data.clickCount;
     });
     axios.get(this.clickLinkPessi).then((res)=> {
-      console.log('created clicklink',res.data )
       this.clickCountPessi = res.data.clickCount;
     });
     axios.get(this.visiteLink).then((res)=> this.visiteCount = res.data.visiteCount);
@@ -120,7 +119,8 @@ export default {
       clickLinkTapin: 'https://reso-site-962417506479.herokuapp.com/click-tapin',
       recordVisiteLink: 'https://reso-site-962417506479.herokuapp.com/record-visite',
       recordClickTapinLink: 'https://reso-site-962417506479.herokuapp.com/record-click-tapin',
-      recordClickPessiLink: 'https://reso-site-962417506479.herokuapp.com/record-click-pessi'
+      recordClickPessiLink: 'https://reso-site-962417506479.herokuapp.com/record-click-pessi',
+      countApi: 0
     }
   },
   computed: {
@@ -139,6 +139,10 @@ export default {
       }
       tabEmpty.push(indexRd);
       return tab[indexRd];
+    },
+    refreshFollowCount() {
+      axios.get('https://api.socialcounts.org/twitter-live-follower-count/resoquibug')
+      .then((res)=> this.countApi = res.data.API_sub);
     },
     closePopup() {
       this.contentDisplay = null;
@@ -164,9 +168,7 @@ export default {
           this.imgDisplay = objetAlea.url;
           this.isGenerating = false;
         }, 1000);
-        setTimeout(() => {
-          this.clickIncrement = '';
-        }, 1000);
+        setTimeout(() => this.clickIncrement = '', 1000);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -190,9 +192,7 @@ export default {
             this.contentDisplayPessi = objetAlea;
             this.isGenerating = false;
           }, 1000);
-          setTimeout(() => {
-          this.clickIncrement = '';
-          }, 1000);
+          setTimeout(() => this.clickIncrement = '', 1000);
         } catch (error) {
           console.error('Error:', error);
         }
