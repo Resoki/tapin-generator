@@ -3,31 +3,28 @@
     <img class="x-logo" src="../../public/images/x-logo.png" />
     <h1 class="title">{{ title.slice(0,7)}} / <span class="span-pessi">Pessi</span> Generator</h1>
     <div class="statistics-panel">
-        <div class="statistic">
-          <p>Items en stock: <span class="count">{{ tapinStock + pessiStock }}</span></p>
-        </div>
+      <div class="statistic">
+        <p>Items en stock: <span class="count">{{ tapinStock + pessiStock }}</span></p>
+      </div>
       <div class="statistic">
         <p>Total de clicks: 
           <span class="count tapin-click"> {{ clickCountTapin + clickCountPessi }}<span :v-if="clickIncrement.length" class="total-clicks">{{ clickIncrement }}</span> </span>
-
-          <span class="total-clicks">
-          </span>
+          <span class="total-clicks"></span>
         </p>
       </div>
-     <div class="statistic">
+      <div class="statistic">
         <p>Nb de visites: <span class="count">{{ visiteCount }}</span></p>
-    </div>
+      </div>
   </div>
-
-  <p v-if="!contentDisplay && !isGenerating">Clique sur un des boutons pour générer un tap-in ou un texte pessi</p>
-  <ButtonGenerate class="button-hover-animation" :isGenerating="isGenerating" image="/images/graphique.png" text="Générer Tap-In" @emitClick="searchUser()"/>
-  <ButtonGenerate class="button-hover-animation" :isGenerating="isGenerating" image="/images/pleurs.png" text="Générer texte Pessi" @emitClick="searchPessiText()"/>
-  <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
-    <div class="separator-medium"> </div>
-  <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
-  <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
-  <SubGoal :count="countApi"/>
-  <FooterComponent :isGenerating="isGenerating"/>
+    <p v-if="!contentDisplay && !isGenerating">Clique sur un des boutons pour générer un tap-in ou un texte pessi</p>
+    <ButtonGenerate class="button-hover-animation" :isGenerating="isGenerating" image="/images/graphique.png" text="Générer Tap-In" @emitClick="searchUser()"/>
+    <ButtonGenerate class="button-hover-animation color-test" :isGenerating="isGenerating" image="/images/pleurs.png" text="Générer texte Pessi" @emitClick="searchPessiText()"/>
+    <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
+    <div class="separator-medium"></div>
+    <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
+    <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
+    <SubGoal :isLoadedApi="isLoadedApi" :count="countApi"/>
+    <FooterComponent :isGenerating="isGenerating"/>
   </div>
 </template>
 
@@ -117,7 +114,8 @@ export default {
       recordClickTapinLink: 'https://reso-site-962417506479.herokuapp.com/record-click-tapin',
       recordClickPessiLink: 'https://reso-site-962417506479.herokuapp.com/record-click-pessi',
       refreshSubLink: 'https://api.socialcounts.org/twitter-live-follower-count/resoquibug',
-      countApi: 0
+      countApi: 0,
+      isLoadedApi: false
     }
   },
   computed: {
@@ -137,6 +135,7 @@ export default {
     },
     refreshFollowCount() {
       axios.get(this.refreshSubLink).then((res)=> this.countApi = res.data.API_sub);
+      this.isLoadedApi = true;
     },
     closePopup() {
       this.contentDisplay = null;
@@ -248,6 +247,9 @@ export default {
   width: 92px;
 }
 
+.color-test {
+  background-color: rgb(246, 186, 7) !important;
+}
 .span-pessi {
   background-image: linear-gradient(to right, rgb(156, 109, 63), rgb(246, 186, 7));
   color: transparent;

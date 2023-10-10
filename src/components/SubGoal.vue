@@ -2,9 +2,10 @@
   <div>
     <div class="sub-goal-header">
       <img class="img-reso" src="../../public/images/reso.jpg"/>
-      <p>{{ count }}/{{objective}} followers</p>
+      <p v-if="count === 0" class="follow">Chargement...</p>
+      <p v-if="count > 0" class="follow">{{ count }}/{{objective}} <span class="follow2">Followers</span></p>
     </div>
-    <div class="w3-border">
+    <div v-if="count > 0" class="w3-border">
       <div class="w3-grey color" style="height: 24px;" :style="{ width: progressStyle }"></div>
     </div>
     <button class="subscribe-button" @click="redirectToTwitter">S'abonner à Reso</button>
@@ -16,6 +17,7 @@ export default {
   name: 'SubGoal',
   props: {
     count: Number,
+    isLoadedApi: Boolean
   },
   data() {
     return {
@@ -46,6 +48,12 @@ export default {
   border-top: 1px solid grey;
   margin-top: 10px;
 }
+
+.follow2 {
+  font: 14px "TwitterChirp";
+  color: #8B98A5;
+}
+
 
 .color {
   border-radius: 10px;
