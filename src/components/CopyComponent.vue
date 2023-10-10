@@ -1,7 +1,5 @@
 <template>
-    <button @click="copyTextToClipboard" class="copy-button">
-    Copier
-    </button>
+    <button @click="copyTextToClipboard" class="copy-button">Copier</button>
 </template>
 
 <script>
@@ -25,7 +23,6 @@ export default {
 </script>
 
 <style scoped>
-/* Vos styles CSS ici */
 .copy-button {
   margin-top: 10px !important;
   display: flex;

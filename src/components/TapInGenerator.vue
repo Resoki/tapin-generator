@@ -3,31 +3,31 @@
     <img class="x-logo" src="../../public/images/x-logo.png" />
     <h1 class="title">{{ title.slice(0,7)}} / <span class="span-pessi">Pessi</span> Generator</h1>
     <div class="statistics-panel">
-  <div class="statistic">
-    <p>Items en stock: <span class="count">{{ tapinStock + pessiStock }}</span></p>
-  </div>
- <div class="statistic">
-  <p>Total de clicks: 
-    <span class="count tapin-click"> {{ clickCountTapin + clickCountPessi }}<span :v-if="clickIncrement.length" class="total-clicks">{{ clickIncrement }}</span> </span>
+        <div class="statistic">
+          <p>Items en stock: <span class="count">{{ tapinStock + pessiStock }}</span></p>
+        </div>
+      <div class="statistic">
+        <p>Total de clicks: 
+          <span class="count tapin-click"> {{ clickCountTapin + clickCountPessi }}<span :v-if="clickIncrement.length" class="total-clicks">{{ clickIncrement }}</span> </span>
 
-    <span class="total-clicks">
-    </span>
-  </p>
-</div>
-  <div class="statistic" v-if="visiteCount > 1">
-    <p>Nb de visites: <span class="count">{{ visiteCount }}</span></p>
+          <span class="total-clicks">
+          </span>
+        </p>
+      </div>
+     <div class="statistic">
+        <p>Nb de visites: <span class="count">{{ visiteCount }}</span></p>
+    </div>
   </div>
-</div>
 
-    <p v-if="!contentDisplay && !isGenerating">Clique sur un des boutons pour générer un tap-in ou un texte pessi</p>
-    <ButtonGenerate class="button-hover-animation" :isGenerating="isGenerating" image="/images/graphique.png" text="Générer Tap-In" @emitClick="searchUser()"/>
-    <ButtonGenerate class="button-hover-animation" :isGenerating="isGenerating" image="/images/pleurs.png" text="Générer texte Pessi" @emitClick="searchPessiText()"/>
-    <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
-      <div class="separator-medium"> </div>
-    <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
-    <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
-    <SubGoal :count="countApi"/>
-    <FooterComponent :isGenerating="isGenerating"/>
+  <p v-if="!contentDisplay && !isGenerating">Clique sur un des boutons pour générer un tap-in ou un texte pessi</p>
+  <ButtonGenerate class="button-hover-animation" :isGenerating="isGenerating" image="/images/graphique.png" text="Générer Tap-In" @emitClick="searchUser()"/>
+  <ButtonGenerate class="button-hover-animation" :isGenerating="isGenerating" image="/images/pleurs.png" text="Générer texte Pessi" @emitClick="searchPessiText()"/>
+  <GeneratingText :isGenerating="isGenerating" text="Generating..."/>
+    <div class="separator-medium"> </div>
+  <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
+  <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
+  <SubGoal :count="countApi"/>
+  <FooterComponent :isGenerating="isGenerating"/>
   </div>
 </template>
 
@@ -38,7 +38,7 @@ import ButtonGenerate from '@/components/ButtonGenerate.vue';
 import GeneratingText from '@/components/GeneratingText.vue'
 import BoxTapin from '@/components/BoxTapin.vue';
 import PessiText from '@/components/PessiText.vue'
-import SubGoal from './SubGoal.vue';
+import SubGoal from '@/components/SubGoal.vue';
 
 // Modules
 import axios from 'axios';
@@ -48,7 +48,7 @@ import arrayTapin from '../arrayTapin.json';
 
 export default {
   name: 'TapInGenerator',
-  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin, PessiText, SubGoal},
+  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin, PessiText, SubGoal },
   props: { title: String },
   beforeUnmount() {
     this.displayedIndices = [];
@@ -62,12 +62,8 @@ export default {
     }
     this.tapinStock = this.tapin.length;
     this.pessiStock = this.textPessi.length;
-    axios.get(this.clickLinkTapin).then((res)=> {
-      this.clickCountTapin = res.data.clickCount;
-    });
-    axios.get(this.clickLinkPessi).then((res)=> {
-      this.clickCountPessi = res.data.clickCount;
-    });
+    axios.get(this.clickLinkTapin).then((res)=> this.clickCountTapin = res.data.clickCount);
+    axios.get(this.clickLinkPessi).then((res)=>this.clickCountPessi = res.data.clickCount);
     axios.get(this.visiteLink).then((res)=> this.visiteCount = res.data.visiteCount);
   },
   data() {
@@ -120,6 +116,7 @@ export default {
       recordVisiteLink: 'https://reso-site-962417506479.herokuapp.com/record-visite',
       recordClickTapinLink: 'https://reso-site-962417506479.herokuapp.com/record-click-tapin',
       recordClickPessiLink: 'https://reso-site-962417506479.herokuapp.com/record-click-pessi',
+      refreshSubLink: 'https://api.socialcounts.org/twitter-live-follower-count/resoquibug',
       countApi: 0
     }
   },
@@ -133,16 +130,13 @@ export default {
   },
   methods: {
     objetAleatoire(tabEmpty, tab) {
-      let indexRd = Math.floor(Math.random() * tab.length);
-      while (tabEmpty.includes(indexRd)) {
-        indexRd = Math.floor(Math.random() * tab.length);
-      }
-      tabEmpty.push(indexRd);
-      return tab[indexRd];
+      let iRd = Math.floor(Math.random() * tab.length);
+      while (tabEmpty.includes(iRd)) iRd = Math.floor(Math.random() * tab.length);
+      tabEmpty.push(iRd);
+      return tab[iRd];
     },
     refreshFollowCount() {
-      axios.get('https://api.socialcounts.org/twitter-live-follower-count/resoquibug')
-      .then((res)=> this.countApi = res.data.API_sub);
+      axios.get(this.refreshSubLink).then((res)=> this.countApi = res.data.API_sub);
     },
     closePopup() {
       this.contentDisplay = null;
@@ -173,37 +167,34 @@ export default {
         console.error('Error:', error);
       }
   },
-      async searchPessiText() {
-        try {
-          await axios.get(this.recordClickPessiLink);
-          const response2 = await axios.get(this.clickLinkPessi);
-          this.clickCountPessi = response2.data.clickCount;
-          this.clickIncrement = '+1';
-          this.isGenerating = true;
-          this.contentDisplay = null;
-          this.contentDisplayPessi = null;
-          this.imgDisplay = null;
+    async searchPessiText() {
+      try {
+        await axios.get(this.recordClickPessiLink);
+        const response2 = await axios.get(this.clickLinkPessi);
+        this.clickCountPessi = response2.data.clickCount;
+        this.clickIncrement = '+1';
+        this.isGenerating = true;
+        this.contentDisplay = null;
+        this.contentDisplayPessi = null;
+        this.imgDisplay = null;
 
-          if (this.displayedIndicesPessi.length === this.textPessi.length) this.displayedIndicesPessi= [];
+        if (this.displayedIndicesPessi.length === this.textPessi.length) this.displayedIndicesPessi= [];
 
-          setTimeout(() => {
-            const objetAlea = this.objetAleatoire(this.displayedIndicesPessi, this.textPessi);
-            this.txt = objetAlea;
-            this.contentDisplayPessi = objetAlea;
-            this.isGenerating = false;
-          }, 1000);
-          setTimeout(() => this.clickIncrement = '', 1000);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-     }
+        setTimeout(() => {
+          const objetAlea = this.objetAleatoire(this.displayedIndicesPessi, this.textPessi);
+          this.txt = objetAlea;
+          this.contentDisplayPessi = objetAlea;
+          this.isGenerating = false;
+        }, 1000);
+        setTimeout(() => this.clickIncrement = '', 1000);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
   }
 }
 </script>
 <style scoped>
-.count {
-  font-size: 16px;
-}
 .total-clicks {
   font-weight: bold;
   font-size: 16px;
@@ -287,9 +278,9 @@ export default {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  max-width: 350px; /* Largeur maximale du panneau */
-  margin: 0 auto; /* Pour le centrer horizontalement */
-  text-align: center; /* Centrer le texte */
+  max-width: 350px;
+  margin: 0 auto;
+  text-align: center;
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;

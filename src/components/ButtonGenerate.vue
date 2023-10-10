@@ -23,7 +23,4 @@ export default {
 .img-button {
   width: 20px;
 }
-p {
-  font-size: 13px;
-}
 </style>
