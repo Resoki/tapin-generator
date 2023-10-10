@@ -4,7 +4,7 @@
     <div class="box-footer-name">
       <p>Tu veux voir ton tapin ici ?<br> Envoit un DM à <b><a class="link-reso" href="https://twitter.com/resoquibug" target='_blank'>@resoquibug</a></b></p>
         <div class="separator-medium"> </div>
-      <p>@2023 - Créé par <a class="link-reso" href="https://twitter.com/resoquibug" target='_blank'>Reso</a></p>
+      <p>@2023 - Créé par <a class="link-reso" href="https://twitter.com/resoquibug" target='_blank'>Reso🛸</a></p>
       <img class="img-reso" src="../../public/images/reso.jpg"/>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <div class="sub-goal-header">
       <img class="img-reso" src="../../public/images/reso.jpg"/>
       <p v-if="count === 0" class="follow">Chargement...</p>
@@ -8,7 +8,7 @@
     <div v-if="count > 0" class="w3-border">
       <div class="w3-grey color" style="height: 24px;" :style="{ width: progressStyle }"></div>
     </div>
-    <button class="subscribe-button" @click="redirectToTwitter">S'abonner à Reso</button>
+    <button class="subscribe-button" @click="redirectToTwitter">Suivre Reso🛸</button>
   </div>
 </template>
 
@@ -45,7 +45,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid grey;
   margin-top: 10px;
 }
 
@@ -73,6 +72,13 @@ export default {
   border-radius: 10px;
 }
 
+.main {
+  border: 2px solid black;
+  width: 200px;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
 .subscribe-button {
   width: 160px;
   background-color: rgb(101, 72, 231);
@@ -81,6 +87,7 @@ export default {
   border-radius: 12px;
   padding: 10px 20px;
   margin-top: 10px;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 .subscribe-button:hover {
