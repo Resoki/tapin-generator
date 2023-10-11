@@ -24,6 +24,14 @@
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
     <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
     <SubGoal :isLoadedApi="isLoadedApi" :count="countApi"/>
+
+    <div>
+      <button class="button-open" @click="openAvisBox()">✉️ Envoyer un avis</button>
+      <button class="button-close" v-if="isOpenAvisList" @click="openAvisList()">🔒 Fermer les avis</button>
+      <button class="button-open" v-if="!isOpenAvisList" @click="openAvisList()">👀 Voir les avis</button>
+    </div>
+    <SendAvis :isOpenAvisBox="isOpenAvisBox" @avis-envoye="updateAvisTab" />
+    <AvisBox :isOpenAvisList="isOpenAvisList" :allAvisTab="allAvisTab"/>
     <FooterComponent :isGenerating="isGenerating"/>
   </div>
 </template>
@@ -34,8 +42,11 @@ import FooterComponent from '@/components/FooterComponent.vue';
 import ButtonGenerate from '@/components/ButtonGenerate.vue';
 import GeneratingText from '@/components/GeneratingText.vue'
 import BoxTapin from '@/components/BoxTapin.vue';
-import PessiText from '@/components/PessiText.vue'
+import PessiText from '@/components/PessiText.vue';
 import SubGoal from '@/components/SubGoal.vue';
+import SendAvis from './SendAvis.vue';
+
+import AvisBox from './AvisBox.vue';
 
 // Modules
 import axios from 'axios';
@@ -45,8 +56,8 @@ import arrayTapin from '../arrayTapin.json';
 
 export default {
   name: 'TapInGenerator',
-  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin, PessiText, SubGoal },
-  props: { title: String },
+  components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin, PessiText, SubGoal, SendAvis, AvisBox },
+  props: { title: String},
   beforeUnmount() {
     this.displayedIndices = [];
   },
@@ -62,9 +73,18 @@ export default {
     axios.get(this.clickLinkTapin).then((res)=> this.clickCountTapin = res.data.clickCount);
     axios.get(this.clickLinkPessi).then((res)=>this.clickCountPessi = res.data.clickCount);
     axios.get(this.visiteLink).then((res)=> this.visiteCount = res.data.visiteCount);
+    axios.get('https://reso-site-962417506479.herokuapp.com/get-avis')
+    .then((res)=> {
+      console.log('all avis:', res.data)
+      this.allAvisTab = res.data;
+    })
   },
   data() {
     return {
+      allAvisTab: [],
+      isOpenAvisBox: false,
+      isOpenAvisList: false,
+      isOpenAvis: false,
       clickIncrement: '',
       tapin: arrayTapin,
       textPessi: ['Un sentiment de malaise,de gène 😵‍💫 travers mon corps 🙊 je ne sais pas quoi dire.Peut-être que je devrais te conseiller de supprimer ce tweet😅ou bien te démontrer a quel point tu es un Flop’Zer 🏴‍☠️⚔️ Mais bon, la vie est fait ainsi soit du coule 🤙🏼soit tu deviens un finito 🥵', 
@@ -128,6 +148,14 @@ export default {
     },
   },
   methods: {
+    openAvisList() {
+      this.isOpenAvisList = !this.isOpenAvisList;
+      this.isOpenAvisBox = false;
+    },
+    openAvisBox() {
+      this.isOpenAvisBox = !this.isOpenAvisBox;
+      this.isOpenAvisList = false;
+    },
     objetAleatoire(tabEmpty, tab) {
       let iRd = Math.floor(Math.random() * tab.length);
       while (tabEmpty.includes(iRd)) iRd = Math.floor(Math.random() * tab.length);
@@ -138,6 +166,13 @@ export default {
       axios.get(this.refreshSubLink).then((res)=> this.countApi = res.data.API_sub);
       this.isLoadedApi = true;
     },
+    updateAvisTab() {
+      axios.get('https://reso-site-962417506479.herokuapp.com/get-avis')
+    .then((res)=> {
+      console.log('all avis:', res.data)
+      this.allAvisTab = res.data;
+    })
+  },
     closePopup() {
       this.contentDisplay = null;
       this.contentDisplayPessi = null;
@@ -243,6 +278,10 @@ export default {
   box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.4);
 }
 
+.button-close {
+  background-color: red;
+}
+
 .x-logo {
   width: 92px;
 }
@@ -263,6 +302,17 @@ export default {
   margin-top: 10px;
 }
 
+button {
+  margin-top: 10px;
+  margin: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+}
 .generation-counter {
   border-radius: 8px;
   text-align: center;
