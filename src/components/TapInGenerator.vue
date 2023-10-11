@@ -45,7 +45,6 @@ import BoxTapin from '@/components/BoxTapin.vue';
 import PessiText from '@/components/PessiText.vue';
 import SubGoal from '@/components/SubGoal.vue';
 import SendAvis from './SendAvis.vue';
-
 import AvisBox from './AvisBox.vue';
 
 // Modules
@@ -74,10 +73,6 @@ export default {
     axios.get(this.clickLinkPessi).then((res)=>this.clickCountPessi = res.data.clickCount);
     axios.get(this.visiteLink).then((res)=> this.visiteCount = res.data.visiteCount);
     axios.get('https://reso-site-962417506479.herokuapp.com/get-avis')
-    .then((res)=> {
-      console.log('all avis:', res.data)
-      this.allAvisTab = res.data;
-    })
   },
   data() {
     return {
@@ -151,6 +146,12 @@ export default {
     openAvisList() {
       this.isOpenAvisList = !this.isOpenAvisList;
       this.isOpenAvisBox = false;
+      console.log('cc')
+
+        axios.get('https://reso-site-962417506479.herokuapp.com/get-avis')
+      .then((res)=> {
+        this.allAvisTab = res.data.reverse();
+        })
     },
     openAvisBox() {
       this.isOpenAvisBox = !this.isOpenAvisBox;
@@ -168,9 +169,8 @@ export default {
     },
     updateAvisTab() {
       axios.get('https://reso-site-962417506479.herokuapp.com/get-avis')
-    .then((res)=> {
-      console.log('all avis:', res.data)
-      this.allAvisTab = res.data;
+    .then(()=> {
+     // this.allAvisTab = res.data;
     })
   },
     closePopup() {

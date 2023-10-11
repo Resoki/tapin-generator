@@ -1,26 +1,27 @@
 <template>
     <div>
-    <div v-if="isOpenAvisList" class="avis-list">
-      <h1>{{ allAvisTab.length }} avis</h1>
-      <div v-for="(avis, index) in displayedAvis" :key="index" class="avis-item">
-        <div class="avis-header">
-          <h2 class="avis-title">{{ avis.name }}</h2>
-          <p class="avis-date">{{ formatAvisDate(avis.date) }}</p>
+      <div v-if="isOpenAvisList" class="avis-list">
+        <h2>({{ allAvisTab.length }}) avis</h2>
+        <div v-for="(avis, index) in allAvisTab.slice(0, 5)" :key="index" class="avis-item">
+          <div class="avis-header">
+            <h2 class="avis-title">{{ avis.name }}</h2>
+            <p class="avis-date">{{ formatAvisDate(avis.date) }}</p>
+          </div>
+          <p class="avis-message">{{ avis.message }}</p>
+          <div class="avis-rating">
+            <span
+              v-for="star in 5"
+              :key="star"
+              :class="['star', star <= avis.note ? 'filled' : '']"
+            >★</span>
+          </div>
         </div>
-        <p class="avis-message">{{ avis.message }}</p>
-        <div class="avis-rating">
-          <span
-            v-for="star in 5"
-            :key="star"
-            :class="['star', star <= avis.note ? 'filled' : '']"
-          >★</span>
+        <div v-if="allAvisTab.length > 5" class="et-autres-avis">
+          et {{ allAvisTab.length - 5 }} autres avis...
         </div>
       </div>
-      <button v-if="displayedAvis.length < allAvisTab.length" @click="loadMoreAvis">Voir plus</button>
-    </div>
     </div>
   </template>
-  
   <script>
   export default {
     name: 'AvisBox',
@@ -35,13 +36,6 @@
       isOpenAvis: false
     };
   },
-    created() {
-        setTimeout(() => {
-            this.displayedAvis = this.allAvisTab.slice(0, this.numAvisToDisplay);
-        }, 800);
-        console.log('cc', this.displayedAvis)
-    },
-
     methods: {
         openAvis() {
             this.isOpenAvis = !this.isOpenAvis;
@@ -49,11 +43,6 @@
         closeAvis() {
             this.isOpenAvis = false;
         },
-        loadMoreAvis() {
-        const startIndex = this.displayedAvis.length;
-        const endIndex = startIndex + this.numAvisToDisplay;
-        this.displayedAvis = this.displayedAvis.concat(this.allAvisTab.slice(startIndex, endIndex));
-      },
       formatAvisDate(date) {
         const avisDate = new Date(date);
         const currentDate = new Date();

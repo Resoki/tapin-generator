@@ -55,7 +55,6 @@
         this.avisNote = rating;
       },
       sendAvis() {
-        console.log(localStorage.getItem('alreadyRated'))
         // if(localStorage.getItem('alreadyRated')) {
         //     console.log('set item')
         //     return alert('Tu as déjà donné ton avis !');
@@ -88,6 +87,8 @@
             this.avisText = '';
             this.avisNote = 0;
             localStorage.setItem('alreadyRated', true);
+            alert('Avis publié !');
+            location.reload()
             this.$emit('avis-envoye', formData);
           });
       },
@@ -99,7 +100,7 @@
 .send-avis {
     margin-top: 10px !important;
     margin-bottom: 10px !important;
-    margin: 0 auto;
+    margin: 0 auto !important;
     border: 1px solid black;
     padding: 20px;
     max-width: 500px;
