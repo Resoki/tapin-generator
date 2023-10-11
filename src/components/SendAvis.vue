@@ -55,10 +55,10 @@
         this.avisNote = rating;
       },
       sendAvis() {
-        // if(localStorage.getItem('alreadyRated')) {
-        //     console.log('set item')
-        //     return alert('Tu as déjà donné ton avis !');
-        // }
+        if(localStorage.getItem('alreadyRated')) {
+            console.log('set item')
+            return alert('Tu as déjà donné ton avis !');
+        }
         const formData = {
           name: this.avisName,
           note: this.avisNote,
