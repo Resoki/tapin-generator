@@ -18,11 +18,11 @@
         </div>
         <div class="form-group avis-text-group">
           <textarea id="avisText" placeholder="Avis" v-model="avisText"></textarea>
-          <div v-if="avisText.length < 200" class="char-counter">
-          {{ avisText.length }}/200
+          <div v-if="avisText.length < maxCar" class="char-counter">
+          {{ avisText.length }}/{{maxCar}}
         </div>
-        <div v-if="avisText.length > 200" class="char-counter-red">
-          {{ avisText.length }}/200
+        <div v-if="avisText.length > maxCar" class="char-counter-red">
+          {{ avisText.length }}/{{ maxCar }}
         </div>
         </div>
         <button type="submit">Envoyer</button>
@@ -32,19 +32,19 @@
   </template>
   
   <script>
+  // Modules 
   import axios from 'axios';
   
   export default {
     name: 'SendAvis',
-    props: {
-        isOpenAvisBox: Boolean
-    },
+    props: { isOpenAvisBox: Boolean },
     data() {
       return {
         avisName: '',
         avisText: '',
         avisNote: 0,
-        isOpenAvis: false
+        isOpenAvis: false,
+        maxCar: 200
       };
     },
     methods: {
@@ -55,48 +55,36 @@
         this.avisNote = rating;
       },
       sendAvis() {
-        if(localStorage.getItem('alreadyRated')) {
-            console.log('set item')
-            return alert('Tu as déjà donné ton avis !');
-        }
+        if(localStorage.getItem('alreadyRated')) return alert('Tu as déjà donné ton avis !');
+
         const formData = {
           name: this.avisName,
           note: this.avisNote,
           message: this.avisText,
           date: new Date(),
         };
-        if(formData.message.length > 200) {
-            return alert('Ton message doit etre de 200 caractère max')
-        }
-        if(formData.name.length < 1) {
-            return alert('Tu dois renseigner un nom')
-        }
-        if(!formData.note) {
-            return alert('Tu dois renseigner un note')
-        }
-        if(!formData.message) {
-            return alert('Tu dois renseigner un message')
-        }
-        // Effectuez une requête POST avec Axios
+        if(formData.message.length > 200) return alert('Ton message doit etre de 200 caractère max');
+        if(formData.name.length < 1) return alert('Tu dois renseigner un nom');
+        if(!formData.note) return alert('Tu dois renseigner un note');
+        if(!formData.message) return alert('Tu dois renseigner un message');
+        
         axios
           .post('https://reso-site-962417506479.herokuapp.com/record-avis', formData)
-          .then((response) => {
-            console.log('Avis envoyé avec succès', response);
-            // Réinitialisez les champs du formulaire après l'envoi
+          .then(() => {
             this.avisName = '';
             this.avisText = '';
             this.avisNote = 0;
             localStorage.setItem('alreadyRated', true);
             alert('Avis publié !');
-            location.reload()
+            location.reload();
             this.$emit('avis-envoye', formData);
           });
       },
     },
   };
-  </script>
+</script>
   
-  <style scoped>
+<style scoped>
 .send-avis {
     margin-top: 10px !important;
     margin-bottom: 10px !important;

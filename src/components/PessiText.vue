@@ -11,21 +11,18 @@
 </template>
 
 <script>
-import CopyComponent from './CopyComponent.vue';
+// Components
+import CopyComponent from '@/components/CopyComponent.vue';
+
 export default {
   name: 'PessiText',
-  props: {
-    contentDisplay: String,
-    twitterShareUrl: String
-  },
+  props: { contentDisplay: String, twitterShareUrl: String },
   methods: {
     onClosePopup() {
       this.$emit('close-popup');
     },
   },
-  components: {
-    CopyComponent
-  }
+  components: { CopyComponent }
 }
 </script>
 <style scoped>
@@ -38,8 +35,8 @@ export default {
   padding: 16px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centrer les éléments horizontalement */
-  justify-content: center; /* Centrer les éléments verticalement */
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
   margin-top: 10px !important;
   max-width: 400px;

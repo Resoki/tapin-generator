@@ -8,7 +8,7 @@
     <div v-if="count > 0" class="w3-border">
       <div class="w3-grey color" style="height: 24px;" :style="{ width: progressStyle }"></div>
     </div>
-    <button class="subscribe-button" @click="redirectToTwitter">Suivre Reso🛸</button>
+    <button class="subscribe-button" @click="redirectToTwitter">Suivre {{ userName }}</button>
   </div>
 </template>
 
@@ -17,11 +17,13 @@ export default {
   name: 'SubGoal',
   props: {
     count: Number,
-    isLoadedApi: Boolean
+    isLoadedApi: Boolean,
+    userTwitter: String,
+    userName: String,
   },
   data() {
     return {
-      objective: 1000
+      objective: 1000,
     }
   },
   computed: {
@@ -34,7 +36,7 @@ export default {
   },
   methods: {
     redirectToTwitter() {
-      window.location.href = 'https://twitter.com/resoquibug';
+      window.location.href = `https://twitter.com/${this.userTwitter}`;
     },
   },
 };
@@ -52,7 +54,6 @@ export default {
   font: 14px "TwitterChirp";
   color: #8B98A5;
 }
-
 
 .color {
   border-radius: 10px;

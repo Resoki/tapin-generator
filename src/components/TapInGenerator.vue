@@ -23,14 +23,14 @@
     <div class="separator-medium"></div>
     <BoxTapin @close-popup="closePopup()" :contentDisplay="contentDisplay" :imgDisplay="imgDisplay" :twitterShareUrl="twitterShareUrl" />
     <PessiText @close-popup="closePopup()" :contentDisplay="contentDisplayPessi"  :twitterShareUrl="twitterShareUrlPessiText"/>
-    <SubGoal :isLoadedApi="isLoadedApi" :count="countApi"/>
+    <SubGoal :isLoadedApi="isLoadedApi" :count="countApi" userTwitter="resoquibug" userName="Reso🛸"/>
 
     <div>
       <button class="button-open" @click="openAvisBox()">✉️ Envoyer un avis</button>
       <button class="button-close" v-if="isOpenAvisList" @click="openAvisList()">🔒 Fermer les avis</button>
       <button class="button-open" v-if="!isOpenAvisList" @click="openAvisList()">👀 Voir les avis</button>
     </div>
-    <SendAvis :isOpenAvisBox="isOpenAvisBox" @avis-envoye="updateAvisTab" />
+    <SendAvis :isOpenAvisBox="isOpenAvisBox" />
     <AvisBox :isOpenAvisList="isOpenAvisList" :allAvisTab="allAvisTab"/>
     <FooterComponent :isGenerating="isGenerating"/>
   </div>
@@ -44,24 +44,24 @@ import GeneratingText from '@/components/GeneratingText.vue'
 import BoxTapin from '@/components/BoxTapin.vue';
 import PessiText from '@/components/PessiText.vue';
 import SubGoal from '@/components/SubGoal.vue';
-import SendAvis from './SendAvis.vue';
-import AvisBox from './AvisBox.vue';
+import SendAvis from '@/components/SendAvis.vue';
+import AvisBox from '@/components/AvisBox.vue';
 
 // Modules
 import axios from 'axios';
 
-//Array with all tap-ins
+// Array with all tap-ins
 import arrayTapin from '../arrayTapin.json';
 
 export default {
   name: 'TapInGenerator',
   components: { FooterComponent, ButtonGenerate, GeneratingText, BoxTapin, PessiText, SubGoal, SendAvis, AvisBox },
-  props: { title: String},
+  props: { title: String },
   beforeUnmount() {
     this.displayedIndices = [];
   },
   created() {
-    this.refreshFollowCount()
+    this.refreshFollowCount();
     const hasVisited = localStorage.getItem('visitedWebsite');
     if (!hasVisited) {
       axios.get(this.recordVisiteLink);
@@ -72,7 +72,6 @@ export default {
     axios.get(this.clickLinkTapin).then((res)=> this.clickCountTapin = res.data.clickCount);
     axios.get(this.clickLinkPessi).then((res)=>this.clickCountPessi = res.data.clickCount);
     axios.get(this.visiteLink).then((res)=> this.visiteCount = res.data.visiteCount);
-    axios.get('https://reso-site-962417506479.herokuapp.com/get-avis')
   },
   data() {
     return {
@@ -130,6 +129,7 @@ export default {
       recordClickTapinLink: 'https://reso-site-962417506479.herokuapp.com/record-click-tapin',
       recordClickPessiLink: 'https://reso-site-962417506479.herokuapp.com/record-click-pessi',
       refreshSubLink: 'https://api.socialcounts.org/twitter-live-follower-count/resoquibug',
+      avisLink: 'https://reso-site-962417506479.herokuapp.com/get-avis',
       countApi: 0,
       isLoadedApi: false
     }
@@ -146,12 +146,7 @@ export default {
     openAvisList() {
       this.isOpenAvisList = !this.isOpenAvisList;
       this.isOpenAvisBox = false;
-      console.log('cc')
-
-        axios.get('https://reso-site-962417506479.herokuapp.com/get-avis')
-      .then((res)=> {
-        this.allAvisTab = res.data.reverse();
-        })
+      axios.get(this.avisLink).then((res)=> this.allAvisTab = res.data.reverse());
     },
     openAvisBox() {
       this.isOpenAvisBox = !this.isOpenAvisBox;
@@ -167,12 +162,6 @@ export default {
       axios.get(this.refreshSubLink).then((res)=> this.countApi = res.data.API_sub);
       this.isLoadedApi = true;
     },
-    updateAvisTab() {
-      axios.get('https://reso-site-962417506479.herokuapp.com/get-avis')
-    .then(()=> {
-     // this.allAvisTab = res.data;
-    })
-  },
     closePopup() {
       this.contentDisplay = null;
       this.contentDisplayPessi = null;
@@ -233,19 +222,20 @@ export default {
 .total-clicks {
   font-weight: bold;
   font-size: 16px;
-  color: #1da1f2; /* Couleur Twitter */
+  color: #1da1f2; 
   margin-left: 5px;
 }
 
 .edit {
   font-size: 10px !important;
 }
+
 .button-hover-animation {
   transition: transform 0.2s ease-in-out;
 }
 
 .button-hover-animation:hover {
-  transform: scale(0.95); /* Rétrécissement lors du survol */
+  transform: scale(0.95);
 }
 .title {
   background-image: linear-gradient(to right, violet, blue);
@@ -345,7 +335,7 @@ button {
 }
 
 .statistic {
-  margin-bottom: 10px; /* Espacement entre les statistiques */
+  margin-bottom: 10px;
 }
 
 .statistic p {
@@ -356,8 +346,7 @@ button {
 .count {
   font-weight: bold;
   font-size: 18px;
-  color: #1da1f2; /* Couleur Twitter */
+  color: #1da1f2;
   margin-left: 5px;
 }
-
 </style>

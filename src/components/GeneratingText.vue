@@ -8,11 +8,6 @@
 <script>
 export default {
   name: 'GeneratingText',
-  props: {
-    isGenerating: Boolean,
-    text: String
-  },
+  props: { isGenerating: Boolean, text: String },
 }
 </script>
-<style scoped>
-</style>

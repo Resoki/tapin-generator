@@ -7,14 +7,10 @@
 <script>
 export default {
   name: 'ButtonGenerate',
-  props: {
-    isGenerating: Boolean,
-    text: String,
-    image: String
-  },
+  props: { isGenerating: Boolean, text: String, image: String },
   methods: {
     emitClick() {
-      this.$emit('emitClick')
+      this.$emit('emitClick');
     }
   }
 }

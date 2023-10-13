@@ -2,27 +2,21 @@
   <div v-if="contentDisplay" class="box-tapin">
     <button @click="onClosePopup" class="close-button">X</button>
     <p>{{ contentDisplay }}</p>
-    <img class="img-display" :src="imgDisplay" />
-    <button class="download-button">Télécharger l'image</button>
+    <img alt="Image Tap-in" class="img-display" :src="imgDisplay" />
+    <button class="download-button">Télécharger l'image</button>RAUBERTFINANCE
     <div class="button-container">
       <a :href="twitterShareUrl" target="_blank" class="share-button">
         Tweeter
-        <img src="../../public/images/share.png" />
+        <img alt="Share Button" src="../../public/images/share.png" />
       </a>
     </div>
   </div>
 </template>
-<script>
 
+<script>
 export default {
   name: 'BoxTapin',
-  props: {
-    contentDisplay: String ,
-    imgDisplay: String,
-    twitterShareUrl: String
-  },
-  components: {
-  },
+  props: { contentDisplay: String , imgDisplay: String, twitterShareUrl: String },
   methods: {
     onClosePopup() {
       this.$emit('close-popup');
@@ -30,6 +24,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .box-tapin {
   position: relative;
@@ -40,8 +35,8 @@ export default {
   padding: 16px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centrer les éléments horizontalement */
-  justify-content: center; /* Centrer les éléments verticalement */
+  align-items: center; 
+  justify-content: center;
   margin: 0 auto;
   margin-top: 10px !important;
   max-width: 400px;
@@ -49,17 +44,12 @@ export default {
   margin-bottom: 10px;
 }
 
-/* ... Styles pour les autres éléments ... */
-
 .button-container {
   display: flex;
   align-items: center;
-  justify-content: center; /* Centrer les boutons horizontalement */
+  justify-content: center;
   margin-top: 10px;
 }
-
-/* ... Styles pour les boutons ... */
-
 
 .close-button {
   position: absolute;

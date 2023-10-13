@@ -1,4 +1,4 @@
-# my-app
+# tapin-generator
 
 ## Project setup
 ```

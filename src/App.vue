@@ -4,7 +4,7 @@
 
 <script>
 // Components
-import TapInGenerator from './components/TapInGenerator.vue'
+import TapInGenerator from '@/components/TapInGenerator.vue'
 
 export default {
   name: 'App',

@@ -1,13 +1,11 @@
 <template>
-    <button @click="copyTextToClipboard" class="copy-button">Copier</button>
+  <button @click="copyTextToClipboard" class="copy-button">Copier</button>
 </template>
 
 <script>
 export default {
   name: 'CopyComponent',
-  props: {
-    textCopy: String
-  },
+  props: { textCopy: String },
   methods: {
     copyTextToClipboard() {
       const textArea = document.createElement("textarea");
@@ -47,5 +45,4 @@ export default {
 .copy-button:hover {
   background-color: #e68a00;
 }
-
 </style>
